@@ -1,0 +1,13 @@
+抽象数据类型linearlist
+{
+    实例
+        有限个元素的集合
+    操作
+        empty():若表空则返回True，否则返回False
+        size()：返回线性表的大小(表的元素个数)
+        get(index)：返回线性表中索引为index的元素
+        indexOf(x)：返回线性表中第一次出现x的索引。若x不存在，则返回-1
+        erase(index)：删除索引为index的元素，索引大于index的元素其索引减
+        insert(index, x)：把x插入线性表中索引为index的位置上，索引大于等于index的元素其索引加1
+        output()：从左到右输出表元素
+} 

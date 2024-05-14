@@ -22,6 +22,7 @@ void print_1D_array_incpp(T a[], int n)
 {
     for(int i = 0; i < n; i++)
         std::cout << a[i] << " ";
+    std::cout << std::endl;
 }
 
 //顺序打印一维数组
@@ -97,8 +98,14 @@ void print_2D_array(T **a, int rows, int columns)
     for(int i = 0; i < rows; i++)
     {
         print_1D_array_incpp<T>(a[i], columns);
-        std::cout << std::endl;
+        // std::cout << std::endl;
     }
+}
+
+template<class T>
+void create1DArray(T* &a, int numberOfColumns)
+{
+    a = new T[numberOfColumns];
 }
 
 template<class T>
@@ -118,6 +125,12 @@ void create2DArray(T ** &a, int numberOfRows, int numberOfColumns)
 //         (*a)[i] = new T[numberOfColumns];
 // }
 
+template<class T>
+void init1DArray(T* &a, int numberOfColumns, const T value)
+{
+    for(int i = 0; i < numberOfColumns; i++)
+        a[i] = value;
+}
 
 template<class T>
 void init2DArray(T ** &a, int numberOfRows, T value)

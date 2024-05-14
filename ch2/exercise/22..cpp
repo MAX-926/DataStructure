@@ -1,6 +1,6 @@
 //transpose（见程序2-19）共执行了多少次交换
 
-#include"../../../MyTool.h"
+#include"../../MyTool.h"
 
 //交换次数：Rows*(Rows-1)/2
 template<class T>
