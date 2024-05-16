@@ -1,8 +1,8 @@
 //类arrayList的一个迭代器
 
 #include"../../MyTool.h"
-#include"5-1.h"
-#include"5-2.h"
+#include"../case/5-1.h"
+#include"../case/5-2.h"
 #include<sstream>
 #include<algorithm>
 #include<numeric>
@@ -35,7 +35,7 @@ class arrayList:public linearList<T>
                 typedef T& reference;
 
                 //构造函数
-                iterator(T* thePosition = 0){position = thePosition;}
+                iterator(T* thePosition = 0, int theEdge = 0){position = thePosition; edge = theEdge, head = thePosition;}
 
                 //解引用操作符
                 T& operator*() const {return *position;}
@@ -66,9 +66,14 @@ class arrayList:public linearList<T>
                 {
                     return it.position == position;
                 }
+                //引入+
+                T operator+(const int index)const;
+                T operator-(const int index)const;
+                // T& operator[](int theIndex);
             protected:
+                T*head;
                 T* position;//指向元素的指针
-
+                int edge;//描述引用對象的長度邊界
         };
         iterator begin()const{return iterator(element);}
         iterator end()const{return iterator(element+listSize);}
@@ -81,6 +86,27 @@ class arrayList:public linearList<T>
         int arrayLength;// 线性表容量
         int listSize;// 线性表元素个数
 };
+
+template<class T>
+T arrayList<T>::iterator::operator+(const int index)const
+{
+    if(index < 0 || index >= edge) throw IllegalParameter("index must be > 0 or be < listSize");
+    return *(position+index);
+}
+
+template<class T>
+T arrayList<T>::iterator::operator-(const int index)const
+{
+    if(index < 0 || index >= edge) throw IllegalParameter("index must be > 0 or be < listSize");
+    return *(position-index);
+}
+
+// template<class T>
+// T& arrayList<T>::iterator::operator[](int theIndex)
+// {
+//     if(theIndex < 0 || theIndex >= position - head + 1) throw IllegalParameter("index must be > 0 or be < listSize");
+//     return *(head+theIndex);
+// }
 
 template<class T>
 arrayList<T>::arrayList(int initialCapacity)
@@ -207,10 +233,12 @@ int main()
     x.insert(2, 3);
     x.insert(3, 4);
     x.insert(4, 5);
-    arrayList<int>::iterator it;
-    std::reverse(x.begin(), x.end());
-    int sum = std::accumulate(x.begin(), x.end(), 0);
-    std::cout << sum << std::endl;
-    for(it = x.begin();it != x.end(); it++)
-        std::cout << *it << " ";
+    arrayList<int>::iterator it(x.getEle(), x.size());
+    // std::reverse(x.begin(), x.end());
+    // int sum = std::accumulate(x.begin(), x.end(), 0);
+    // std::cout << sum << std::endl;
+    // for(it = x.begin();it != x.end(); it++)
+    //     std::cout << *it << " ";
+    for(int i = 0; i < 5; i++)
+        std::cout << it+i << std::endl;
 }
