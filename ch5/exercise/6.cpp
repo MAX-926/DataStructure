@@ -57,7 +57,7 @@ void arrayListWithSetSize<T>::setSize(int theSize)
  class simple:public arrayList<T>
  {
     public:
-        simple():i(0){}
+        simple():i(0), arrayList<T>(10){}
         bool operator!=(const simple &x){return i != x.i;}
     private:
         T i;
@@ -85,3 +85,16 @@ int main()
         // if(theSize == 100){ step = 100;}
     }
 }
+//T为用户自建类型时，复杂度为 O(n)，普通类型为O(1)
+//Scale   elapsedTime     Time per set
+// 0       1000    1.0193e-05
+// 100     1000    0.0120863
+// 200     1000    0.0221882
+// 300     1000    0.0326307
+// 400     1000    0.0432227
+// 500     1000    0.0579005
+// 600     1000    0.0725531
+// 700     1000    0.0850051
+// 800     1000    0.0987459
+// 900     1000    0.100361
+// 1000    1000    0.111359
