@@ -150,11 +150,11 @@ std::ostream& operator<<(std::ostream &out, const arrayList<T> &x)
 //     std::copy(element, element+listSize, std::ostream_iterator<T>(std::cout, " "));
 // }
 
-// template<class T>
-// std::ostream& operator<<(std::ostream &out, const arrayList<T> &x)
-// {
-//     x.output(out); return out;
-// }
+// // template<class T>
+// // std::ostream& operator<<(std::ostream &out, const arrayList<T> &x)
+// // {
+// //     x.output(out); return out;
+// // }
 
 
 // // int main()
@@ -176,4 +176,4 @@ std::ostream& operator<<(std::ostream &out, const arrayList<T> &x)
 //     linearList<int> *x =(linearList<int>*) new arrayList<int>(100);
 //     arrayList<double> y(100);
     
-// }
+// // }
