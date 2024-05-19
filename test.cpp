@@ -9,7 +9,7 @@
 // }
 #include"time.h"
 #include<math.h>
-#include"../MyTool.h"
+#include"MyTool.h"
 #include<iostream>
 #include<numeric>
 #include<algorithm>
@@ -60,9 +60,91 @@ int main()
     // cout << (pow(2, 14)/14  );
     // cout << n;
 
-    clock_t elapsedTime;
-    clock_t aTime = clock();
-    cout << aTime << endl << clock()-aTime << endl;
-    aTime = clock();
-    cout << aTime << endl << clock()-aTime << endl;
+    // clock_t elapsedTime;
+    // clock_t aTime = clock();
+    // cout << aTime << endl << clock()-aTime << endl;
+    // aTime = clock();
+    // cout << aTime << endl << clock()-aTime << endl;
 }
+
+//1.檢查theIndex是否合法 2.檢查是否有足夠的空間，不夠擴容 3.判斷需要移動的元素所在方向，移動后插入新值 4.更新綫性表的屬性
+
+// #include"E:\DataStructure\ch5\exercise\31.cpp"
+// template<class T>
+// void circularArrayList<T>::insert(int theIndex, const T &theElement)
+// {
+//     int listSize = size();
+//     if(theIndex < 0 || theIndex > listSize)
+//     {
+//         std::ostringstream s;
+//         s << "theIndex = " << theIndex << " listSize = " << listSize;
+//         throw IllegalParameter(s.str());
+//     }
+//     if(first == -1)
+//     {
+//         element[0] = theElement;
+//         first = last = 0;
+//     }
+//     if(listSize = arrayLength)
+//     {
+//         T* tmp =  new T[2*arrayLength];
+//         //copy elements into new space
+//         int j = 0;
+//         for(int i = first; i != last; i = (i+1)%arrayLength)
+//             tmp[j++] = element[i];
+//         tmp[j] = element[last];
+//         delete []element;
+//         element = tmp;
+//         first = 0;
+//         last = j;
+//         arrayLength*=2;
+//     }
+//     if(theIndex <= (listSize - 1)/2)
+//     {
+//         //移動左邊的元素
+//         // for(int i = first; i < theIndex; i = (i+1)%arrayLength)
+//         //             element[(arrayLength + first + i-1)%arrayLength] = element[i];
+//         // element[theIndex] = theElement;
+//         for(i = 0; i < theIndex; i++)
+//         {
+//             element[(arrayLength+first+i-1)%arrayLength] = element[(i+first)%arrayLength];
+//         }
+//         first = (arrayLength + first - 1)%arrayLength;
+//     }
+//     else
+//     {
+//         // for(int i = last; i > (theIndex + first)%arrayLength; i = (arrayLength + i - 1)%arrayLength)
+//         //     element[(i+1)%arrayLength] = element[i];
+//         for(int i = listSize-1; i >= theIndex; i--)
+//             element[(i+1+first)%arrayLength] = element[(i+first)%arrayLength];
+//         last = (last+1)%arrayLength;
+//     }
+//     element[(theIndex+first)%arrayLength] = theElement;
+// }
+
+// template<class T>
+// void circularArrayList<T>::earse(int theIndex)
+// {
+//     checkIndex(theIndex);
+//     int listSize = size();
+//     if(listSize == 1)
+//     {
+//         element[first].~T();
+//         first = -1;
+//     }
+//     if(theIndex <= (listSize-1)/2)
+//     {
+//         //shift left side
+//         for(int i = theIndex-1; i >= 0; i--)
+//             element[(i + first+1)%arrayLength] = element[(i+first)%arrayLength];
+//         element[first].~T();
+//        first = (first+1)%arrayLength;
+//     }
+//     else
+//     {
+//         for(int i = theIndex+1; i < listSize; i++)
+//             element[(first+i-1)%arrayLength] = element[(first+i)%arrayLength];
+//         element[last].~T();
+//         last = (arrayLength+last-1)%arrayLength;
+//     }
+// }
