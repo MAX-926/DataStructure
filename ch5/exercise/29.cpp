@@ -49,10 +49,10 @@ void arrayListWithMerge<T>::merge(const arrayListWithMerge<T> &a, const arrayLis
 int main()
 {
     arrayListWithMerge<int> a, b, c, d(10);
-    for(int i = 0; i < 5; i++)
-    a.insert(i, i+1);
-    for(int i = 0; i < 5; i++)
-    b.insert(i, i+2);
+    // for(int i = 0; i < 5; i++)
+    // a.insert(i, i+1);
+    // for(int i = 0; i < 5; i++)
+    // b.insert(i, i+2);
     std::cout << a << std::endl;
     std::cout << b << std::endl;
     c.merge(a, b);

@@ -1,6 +1,7 @@
 #include"ch5/case/5-1.h"
 #include<iterator>
 #include<sstream>
+#include<iostream>
 
 template<class T>
 class circularArrayList:public linearList<T>
@@ -22,6 +23,70 @@ class circularArrayList:public linearList<T>
         void erase(int theIndex);//best:O(1) worst:O(min{theIndex, listSize-theIndex-1})
         void output(std::ostream& out)const;//O(listSize)
         int capacity(){return arrayLength;}//O(1)
+        class iterator;
+        class iterator
+        {
+            public:
+                typedef std::bidirectional_iterator_tag iterator_category;
+                typedef T value_type;
+                typedef ptrdiff_t difference_type;
+                typedef T* pointer;
+                typedef T& reference;
+                iterator(const circularArrayList<T> &theList):position(theList.element+theList.first), ifirst(theList.first), ilast(theList.last), iarrayLength(theList.arrayLength), theElement(theList.element){}
+                iterator(T* thePosition = 0):position(thePosition){}
+                iterator(const iterator &theIterator){position = theIterator.position;}
+                iterator& operator++()
+                {
+                    // position++;
+                    int theIndex = (iarrayLength + position - theElement)%iarrayLength;//5 1 3
+                    int theNextIndex = (theIndex+1+ifirst)%iarrayLength;
+                    position = &theElement[theNextIndex];
+                    return *this;
+                }
+                iterator operator++(int)
+                {
+                    iterator old = *this;
+                    int theIndex = (iarrayLength + position - theElement)%iarrayLength;//5 1 3
+                    int theNextIndex = (theIndex+1+ifirst)%iarrayLength;
+                    position = &theElement[theNextIndex];
+                    // position++;
+                    return old;
+                }
+                iterator& operator--()
+                {
+                    // position--;
+                    int theIndex = (iarrayLength + position -theElement)%iarrayLength;//5 1 3
+                    int theNextIndex = (iarrayLength+theIndex-1+ifirst)%iarrayLength;
+                    position = &theElement[theNextIndex];
+                    return *this;
+                }
+                iterator operator--(int)
+                {
+                    iterator old = *this;
+                    int theIndex = (iarrayLength + position - theElement)%iarrayLength;//5 1 3
+                    int theNextIndex = (iarrayLength+theIndex-1+ifirst)%iarrayLength;
+                    position = &theElement[theNextIndex];
+                    // position--;
+                    return old;
+                }
+                T& operator*()const{return *position;}
+                T* operator->()const{return &*position;}
+                bool operator==(const iterator &theIter)const{return position == theIter.position;}
+                bool operator!=(const iterator &theIter)const{return position != theIter.position;}       
+                iterator begin(const circularArrayList<T> &theList)const{return iterator(theList);}
+                // iterator end(const circularArrayList<T> &theList)const
+                // {   
+                //     iterator tmp(theList);
+                //     tmp.position = &theElement[ilast];                   
+                //     return iterator(tmp);
+                // }
+            protected:
+                T* position;
+                T* theElement;
+                int ifirst;
+                int ilast;
+                int iarrayLength;
+        };
     protected:
         void checkIndex(int theIndex)const;//O(1)
         T* element;
@@ -70,7 +135,7 @@ circularArrayList<T>::circularArrayList(const circularArrayList<T> &theList)
     last = theList.last;
     element = new T[arrayLength];
     for(int i = first; i != last; i = (i+1)%arrayLength)
-        element[i] = theList[i];
+        element[i] = theList.element[i];
     element[last] = theList.element[last];
 }
 
@@ -176,7 +241,15 @@ int main()
     circularArrayList<int> x;
     for(int i = 0; i < 5; i++)
         x.insert(i, i+1);
-    std::cout << x.get(5);
+    std::cout << x << std::endl;
+    circularArrayList<int>::iterator it(x);
+    for(int i = 0; i < 5; i++)
+        std::cout << *(it++) << " ";
+        std::cout << std::endl;
+    // it = it.begin(x);
+    // it = it.end(x);
+    for(int i = 5; i > 0; i++)
+        std::cout << *(it--) << " ";
 }
 
 //從抽象層解決問題（索引元素）
