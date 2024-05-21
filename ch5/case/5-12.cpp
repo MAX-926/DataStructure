@@ -68,6 +68,7 @@ void vectorList<T>::erase(int theIndex)
 template<class T>
 void vectorList<T>::output(std::ostream& out)const
 {
+    if(element->size() == 0){ out << ""; return;}
     //vector在插入數據后會在數組最後添一個元素，其值爲零
     //所以用end()函數獲取最後插入的數據需要將迭代器的值減一！！！
     std::copy(element->begin(), element->end(), std::ostream_iterator<T>(cout, " "));
