@@ -14,5 +14,6 @@ class linearList
         virtual void erase(int theIndex) = 0;
         virtual void insert(int theIndex, const T& theElement) = 0;
         virtual void output(std::ostream& out) const = 0;
+        // virtual void output() const = 0;
 };
 #endif //ch5_5_1_H
