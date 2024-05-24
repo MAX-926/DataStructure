@@ -8,3 +8,4 @@ class extendLinearList:public linearList<T>
         virtual void clear() = 0;
         virtual void push_back(const T& theElement) = 0;
 };
+
