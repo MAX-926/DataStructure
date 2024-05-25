@@ -353,10 +353,10 @@ void chain<T>::output(ostream& out)const
     }
 }
 
-int main()
-{
-    chain<int> x;
-    for(int i = 0; i < 5; i++)
-        x.insert(i ,i+1);
-    std::cout << x;
-}
+// int main()
+// {
+//     chain<int> x;
+//     for(int i = 0; i < 5; i++)
+//         x.insert(i ,i+1);
+//     std::cout << x;
+// }
