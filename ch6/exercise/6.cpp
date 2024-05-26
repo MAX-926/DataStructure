@@ -1,3 +1,4 @@
+
 #include"../case/6-2.h"
 
 template<class T>
@@ -24,9 +25,10 @@ int main()
     for(int i = 0; i < 5; i++)
         x.insert(i,i+1);
     cout << x << endl;
-    try
-    {
-    x[0] = 26;
-    cout << x[-1] << endl;
-    }catch(IllegalParameter ip){ip.outputMessage();}
+    // try
+    // {
+    x[0] = 0.5;
+    int y = x[0];
+    cout << x << endl;
+    // }catch(IllegalParameter ip){ip.outputMessage();}
 }
