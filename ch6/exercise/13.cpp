@@ -10,56 +10,6 @@ class chainListWithConverser:public chain<T>
         arrayList<T>* toList()const;
 };
 
-// template<class T>
-// void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
-// {
-//     if(!theList.size())
-//     {
-//         while(this->firstNode)
-//         {
-//             chainNode<T>* nextNode = this->firstNode->next;
-//             delete this->firstNode;
-//             this->firstNode = nextNode;
-//         }
-//         this->listSize = 0;
-//         return;
-//     }
-//     chainNode<T>* current = this->firstNode, *previous;
-//     for(int i = 0; i < theList.size(); i++)
-//     {
-//         current->element = theList.get(i);
-//         if(i == theList.size()-1)
-//         {
-//             // current = current->next;
-//             while(current->next)
-//             {
-//                 chainNode<T>* nextNode = current->next->next;
-//                 delete current->next;
-//                 current->next = nextNode;
-//             }
-//             current->next = NULL;
-//             return;
-//         }
-//         previous = current;
-//         if(!(current->next))
-//         {
-//             current->next = new chainNode<T>(0, NULL);
-//             current = current->next;
-//             continue;
-//         }
-//     }
-//     // if(this->listSize < theList.size())
-//     // {
-//     //     current->next = NULL;
-//     //     this->listSize = theList.size();
-//     // }
-//     // else
-//     // {
-
-//     // }
-// }
-
-
 template<class T>
 void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
 {
@@ -104,16 +54,18 @@ void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
             chainNode<T>* previous;
             for(int i = 0; i < theListSize; i++)
             {
-                if(!(this->listSize))
-                    current = new chainNode<T>(0);
+                if(!current)
+                {
+                    current = new chainNode<T>(0, NULL);
+                    this->firstNode = current;
+                }
                 current->element = theList.get(i);
                 previous = current;
                 if(!(current = current->next))
                 {
-                    previous->next = new chainNode<T>(0);
-                    current = previous;
+                    previous->next = new chainNode<T>(0, NULL);
+                    current = previous->next;
                 }
-                current = current->next;
             }
             delete previous->next;
             previous->next = NULL;
@@ -142,16 +94,25 @@ int main()
 {
     chainListWithConverser<int> x;
     arrayList<int> y;
-    for(int i = 0; i < 10; i++)
+    for(int i = 0; i < 0; i++)
     {
         x.insert(i, i+1);
         // y.insert(i, i+100);//x.size == y.size
     }
-    //y不赋值,x赋值 y < x
-    y.insert(0, 1);
+    for(int i = 0; i < 2; i++)
+    {
+        y.insert(i, i+5);
+    }
+    // y不赋值,x赋值 y < x
+    // y.insert(0, 1);
+    cout << "x:";
     cout << x << endl;
+    cout << "y:";
     cout << y << endl;
     x.fromList(y);
+    cout << "after fromList(y):" << endl;
+    cout << "x:";
     cout << x << endl;
-    cout << *(x.toList());
+    cout << "x.toList():" << endl;
+    cout << "x:" << *(x.toList());
 }
