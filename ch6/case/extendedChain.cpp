@@ -242,14 +242,14 @@ void extendedChain<T>::clear()
     lastNode = firstNode;
 }
 
-int main()
-{
-    extendedChain<int> xc;
-    for(int i = 0; i < 5; i++)
-        xc.insert(i, i+1);
-    cout << xc << endl;
-    xc.push_back(26);
-    xc.erase(5);
-    xc.push_back(28);
-    cout << xc;
-}
+// int main()
+// {
+//     extendedChain<int> xc;
+//     for(int i = 0; i < 5; i++)
+//         xc.insert(i, i+1);
+//     cout << xc << endl;
+//     xc.push_back(26);
+//     xc.erase(5);
+//     xc.push_back(28);
+//     cout << xc;
+// }
