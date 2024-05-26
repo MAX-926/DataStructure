@@ -14,7 +14,7 @@ template<class T>
 void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
 {
     int theListSize = theList.size();
-    if(theListSize == 0)
+    if(theListSize == 0)//O(chainListSize)
     {
         while (this->firstNode)
         {
@@ -28,7 +28,7 @@ void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
     }
     else
     {
-        if(theListSize <= this->listSize)
+        if(theListSize <= this->listSize)//O(chainListSize)
         {
             chainNode<T>* current = (this->firstNode);
             int i;
@@ -48,7 +48,7 @@ void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
             this->listSize = theListSize;
             return;
         }
-        else
+        else//O(theListSize)
         {
             chainNode<T>* current = this->firstNode;
             chainNode<T>* previous;
@@ -77,7 +77,7 @@ void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
 
 
 template<class T>
-arrayList<T>* chainListWithConverser<T>::toList()const
+arrayList<T>* chainListWithConverser<T>::toList()const//O(listSize)
 {
     arrayList<T>* targetList = new arrayList<T>;
     chainNode<T>* current = this->firstNode;
