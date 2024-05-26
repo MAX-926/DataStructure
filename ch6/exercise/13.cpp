@@ -57,7 +57,7 @@ void chainListWithConverser<T>::fromList(const arrayList<T> &theList)
                 if(!current)
                 {
                     current = new chainNode<T>(0, NULL);
-                    this->firstNode = current;
+                    this->firstNode = current;//要記得更新firstNode的值！！！
                 }
                 current->element = theList.get(i);
                 previous = current;
