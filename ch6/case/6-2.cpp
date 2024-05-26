@@ -353,6 +353,53 @@ void chain<T>::output(ostream& out)const
     }
 }
 
+
+template<class T>
+void chain<T>::meld(chain<T> &a, chain<T> &b)
+{
+    //將表清空
+    while(this->firstNode)
+    {
+        chainNode<T>* nextNode = firstNode->next;
+        delete this->firstNode;
+        this->firstNode = nextNode;
+    }
+    //轉接a表到當前對象firstNode
+    this->firstNode = a.firstNode;
+    this->listSize = a.listSize;
+    //a表置空
+    a.firstNode = NULL;
+    a.listSize = 0;
+    // //插入b表元素
+    // //若b表為空
+    if(b.size() == 0)
+        return;
+    // //b表非空
+    chainNode<T>* currentA = this->firstNode;
+    chainNode<T>* currentB = b.firstNode;
+    // // //確定插入情況
+    double insertionLength = (this->listSize);// WHY??????????????????????????? not listSize-1
+    for(int i = 0; i < insertionLength; i++)
+    {
+        if(!currentB) break;
+        chainNode<T>* nextA = currentA->next, *nextB = currentB->next;
+        currentA->next = currentB;
+        currentB->next = nextA;
+        currentB = nextB;
+        //A步進2步
+        currentA = nextA;
+    }
+    if(currentB)
+    {
+        if(this->listSize == 0) this->firstNode = currentB;
+        else if(listSize == 1) this->firstNode->next = currentB;
+        // else currentA->next->next = currentB;
+    }
+    b.firstNode = NULL;
+    b.listSize = 0;
+    this->listSize += b.size();
+}
+
 // int main()
 // {
 //     chain<int> x;

@@ -34,7 +34,7 @@ extendedChain<T>* meld(const extendedChain<T> &a, const extendedChain<T> &b)
 //     {
 //         // a.insert(i ,12);
 //         b.insert(i, 1);
-//     }
+//     } 
 //     cout << a << endl << b << endl;
 //     cout << *meld(a, b);
 // }

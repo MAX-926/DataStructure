@@ -46,13 +46,15 @@ class chain:public linearList<T>
                     return node == theIter.node;
                 }
                 bool operator!=(const iterator &theIter)const{ return node != theIter.node;}
+                //獲取Node
+                chainNode<T>& Node(){return node;}
             protected:
                 struct chainNode<T>* node;
         };
         iterator begin()const{return iterator(firstNode);}
         iterator end()const{return iterator(NULL);}
-        // void show()const;
-        // void output()const;
+        //new ADT methods:
+        void meld(chain<T> &a, chain<T> &b);
     protected:
         void checkIndex(int theIndex)const;
         struct chainNode<T>*  firstNode;
