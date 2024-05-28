@@ -398,122 +398,151 @@ void chain<T>::meld(chain<T> &a, chain<T> &b)
 // template<class T>
 // void chain<T>::merge(chain<T> &a, chain<T> &b)
 // {
-//     //清空当前链表
+//     //清空当前表
 //     while(firstNode)
 //     {
 //         chainNode<T>* nextNode = firstNode->next;
 //         delete firstNode;
 //         firstNode = nextNode;
 //     }
-    
+//     //a, b有空表
 //     if(!a.listSize)
 //     {
 //         firstNode = b.firstNode;
 //         listSize = b.listSize;
-//         b.listSize == 0;
 //         b.firstNode = NULL;
+//         b.listSize = 0;
 //         return;
 //     }
-//     else if(!b.listSize)
+//     if(!b.listSize)
 //     {
 //         firstNode = a.firstNode;
 //         listSize = a.listSize;
-//         a.listSize = 0;
 //         a.firstNode = NULL;
+//         a.listSize = 0;
 //         return;
 //     }
-
-//     // chainNode<T>* currentNode = firstNode;
-//     // auto iterA = a.begin(), iterB = b.begin();
+//     // //a, b皆非空
 //     chainNode<T>* ap = a.firstNode, *bp = b.firstNode;
+//     int aTimes = 0, bTimes = 0;
 //     T theElement;
-//     // T theElement = ap->element > bp->element ? bp->element : ap->element;
-//     if(ap->element >= bp->element)
+//     if(ap->element > bp->element)
 //     {
 //         theElement = bp->element;
 //         bp = bp->next;
+//         bTimes++;
 //     }
-//     else if(ap->element < bp->element)
+//     else if(bp->element > ap->element)
 //     {
 //         theElement = ap->element;
 //         ap = ap->next;
+//         aTimes++;
 //     }
+//     else //if(ap->element == bp->element)
+//     {
+//         theElement = bp->element;
+//         bp = bp->next;
+//         bTimes++;
+//     }
+//     // // T theElement = 
 //     firstNode = new chainNode<T>(theElement, NULL);
 //     chainNode<T>* currentNode = firstNode;
+
 //     while(ap && bp)
 //     {
-//     //     if(ap->element == bp->element)
-//     //     {
-//     //     }
-//     //     T theElement = ap->element > bp->element ? bp->element : ap->element;
-//     //     currentNode = new chainNode<T>(theElement);
-//         if(ap->element == bp->element)
+//         if(ap->element > bp->element)
 //         {
 //             theElement = bp->element;
-//             currentNode->next = new chainNode<T>(theElement, NULL);
-//             currentNode = currentNode->next;
-//             //删节点
-//             chainNode<T>* nextB = bp->next;
-//             delete bp;
-//             bp = nextB;
+//             bp = bp->next;
+//             bTimes++;
 //         }
-//         else if(ap->element < bp->element)
+//         else if(bp->element > ap->element)
 //         {
 //             theElement = ap->element;
-//             currentNode->next = new chainNode<T>(theElement, NULL);
-//             currentNode = currentNode->next;
-//             //删节点
-//             chainNode<T>* nextA = ap->next;
-//             delete ap;
-//             ap = nextA;
+//             ap = ap->next;
+//             aTimes++;
 //         }
-//         else //if(ap->element > bp->element)
+//         else //if(ap->element == bp->element)
 //         {
-//             theElement = bp->element;
-//             currentNode->next = new chainNode<T>(theElement, NULL);
-//             currentNode = currentNode->next;
-//             //删节点
-//             chainNode<T>* nextB = bp->next;
-//             delete bp;
-//             bp = nextB;
+//             if(aTimes > bTimes)
+//             {
+//                 theElement = bp->element;
+//                 bp = bp->next;
+//                 bTimes++;
+//             }
+//             if(aTimes <= bTimes)
+//             {
+//                 theElement = ap->element;
+//                 ap = ap->next;
+//                 aTimes++;
+//             }
 //         }
+//         currentNode->next = new chainNode<T>(theElement, NULL);
+//         currentNode = currentNode->next;
 //     }
 //     if(ap)
 //     {
 //         currentNode->next = ap;
-//         while(ap)
+//         chainNode<T>* iterA = a.firstNode, *iterB = b.firstNode;
+//         while(iterA != ap)
 //         {
-//             chainNode<T>* nextNode = ap->next;
-//             delete ap;
-//             ap = nextNode;
+//             chainNode<T>* nextNode = iterA->next;
+//             delete iterA;
+//             iterA = nextNode;
 //         }
+//         while(iterB)
+//         {
+//             chainNode<T>* nextB = iterB->next;
+//             delete iterB;
+//             iterB = nextB;
+//         }
+//         b.firstNode = NULL;//为什么删到最后b.firstNode不指向NULL：因为iter取得了firstNode的值，iter的变化不会使firstNode指向改变
+//         a.firstNode = NULL;
+//         // a.listSize = 0;
+//         // b.listSize = 0;
+//         listSize = a.size() + b.size();
+//         b.listSize = 0;
+//         a.listSize = 0;
+//         return;
 //     }
 //     if(bp)
 //     {
 //         currentNode->next = bp;
-//         while(bp)
+//         chainNode<T>* iterA = a.firstNode, *iterB = b.firstNode;
+//         while(iterB != bp)
 //         {
-//             chainNode<T>* nextNode = bp->next;
-//             delete bp;
-//             bp = nextNode;
+//             chainNode<T>* nextNode = iterB->next;
+//             delete iterB;
+//             iterB = nextNode;
 //         }
+//         while(iterA != NULL)//为什么删到最后a.firstNode不指向NULL
+//         {
+//             chainNode<T>* nextA = iterA->next;
+//             delete iterA;
+//             iterA = nextA;
+//         }
+//         b.firstNode = NULL;
+//         a.firstNode = NULL;
+//         b.listSize = 0;
+//         a.listSize = 0;
+//         listSize = a.size() + b.size();
+//         return;
 //     }
-//     listSize = a.size()+b.size();
-//     a.listSize = 0;
-//     b.listSize = 0;
+//     // listSize = a.size() + b.size();
+//     // b.listSize = 0;
+//     // a.listSize = 0;
 // }
+
 
 template<class T>
 void chain<T>::merge(chain<T> &a, chain<T> &b)
 {
-    //清空当前表
     while(firstNode)
     {
-        chainNode<T>* nextNode = firstNode->next;
+        chainNode<T> *nextNode = firstNode->next;
         delete firstNode;
         firstNode = nextNode;
     }
-    //a, b有空表
     if(!a.listSize)
     {
         firstNode = b.firstNode;
@@ -530,131 +559,89 @@ void chain<T>::merge(chain<T> &a, chain<T> &b)
         a.listSize = 0;
         return;
     }
-    // //a, b皆非空
-    chainNode<T>* ap = a.firstNode, *bp = b.firstNode;
-    int aTimes = 0, bTimes = 0;
+    //a, b非空
     T theElement;
-    if(ap->element > bp->element)
+    // chainNode<T>* iterA = a.firstNode, *iterB = b.firstNode;
+    int aTimes = 0, bTimes = 0;
+    if(a.firstNode->element < b.firstNode->element)
     {
-        theElement = bp->element;
-        bp = bp->next;
-        bTimes++;
-    }
-    else if(bp->element > ap->element)
-    {
-        theElement = ap->element;
-        ap = ap->next;
+        firstNode = a.firstNode;
+        a.firstNode = a.firstNode->next;
         aTimes++;
+        // iter = b.firstNode;
     }
-    else //if(ap->element == bp->element)
+    else if(a.firstNode->element >= b.firstNode->element)
     {
-        theElement = bp->element;
-        bp = bp->next;
+        firstNode = b.firstNode;
+        b.firstNode = b.firstNode->next;
         bTimes++;
     }
-    // // T theElement = 
-    firstNode = new chainNode<T>(theElement, NULL);
     chainNode<T>* currentNode = firstNode;
-
-    while(ap && bp)
+    while(a.firstNode && b.firstNode)
     {
-        if(ap->element > bp->element)
+        if(a.firstNode->element < b.firstNode->element)
         {
-            theElement = bp->element;
-            bp = bp->next;
-            bTimes++;
-        }
-        else if(bp->element > ap->element)
-        {
-            theElement = ap->element;
-            ap = ap->next;
+            currentNode->next = a.firstNode;
+            a.firstNode = a.firstNode->next;
+            currentNode = currentNode->next;
             aTimes++;
         }
-        else //if(ap->element == bp->element)
+        else if(a.firstNode->element > b.firstNode->element)
         {
-            if(aTimes > bTimes)
+            currentNode->next = b.firstNode;
+            b.firstNode = b.firstNode->next;
+            currentNode = currentNode->next;
+            bTimes++;
+        }
+        else
+        {
+            if(aTimes < bTimes)
             {
-                theElement = bp->element;
-                bp = bp->next;
-                bTimes++;
-            }
-            if(aTimes <= bTimes)
-            {
-                theElement = ap->element;
-                ap = ap->next;
+                currentNode->next = a.firstNode;
+                a.firstNode = a.firstNode->next;
+                currentNode = currentNode->next;
                 aTimes++;
             }
+            else
+            {
+                currentNode->next = b.firstNode;
+                b.firstNode = b.firstNode->next;
+                currentNode = currentNode->next;
+                bTimes++;   
+            }
         }
-        currentNode->next = new chainNode<T>(theElement, NULL);
-        currentNode = currentNode->next;
     }
-    if(ap)
+    if(a.firstNode)
     {
-        currentNode->next = ap;
-        chainNode<T>* iterA = a.firstNode, *iterB = b.firstNode;
-        while(iterA != ap)
-        {
-            chainNode<T>* nextNode = iterA->next;
-            delete iterA;
-            iterA = nextNode;
-        }
-        while(iterB)
-        {
-            chainNode<T>* nextB = iterB->next;
-            delete iterB;
-            iterB = nextB;
-        }
+       currentNode->next = a.firstNode;
+       a.firstNode = NULL;
+    //    a.listSize = 0;
+    }
+    else if(b.firstNode)
+    {
+        currentNode->next = b.firstNode;
         b.firstNode = NULL;
-        a.firstNode = NULL;
-        // a.listSize = 0;
         // b.listSize = 0;
-        listSize = a.size() + b.size();
-        b.listSize = 0;
-        a.listSize = 0;
-        return;
     }
-    if(bp)
-    {
-        currentNode->next = bp;
-        chainNode<T>* iterA = a.firstNode, *iterB = b.firstNode;
-        while(iterB != bp)
-        {
-            chainNode<T>* nextNode = iterB->next;
-            delete iterB;
-            iterB = nextNode;
-        }
-        while(iterA != NULL)
-        {
-            chainNode<T>* nextA = iterA->next;
-            delete iterA;
-            iterA = nextA;
-        }
-        b.firstNode = NULL;
-        a.firstNode = NULL;
-        b.listSize = 0;
-        a.listSize = 0;
-        listSize = a.size() + b.size();
-        return;
-    }
-    // listSize = a.size() + b.size();
-    // b.listSize = 0;
-    // a.listSize = 0;
+    listSize = a.listSize + b.listSize;
+    a.listSize = 0;
+    b.listSize = 0;
 }
 
 int main()
 {
     chain<int> x, y, z;
-    for(int i = 0; i < 1; i++)
+    for(int i = 0; i < 10; i++)
     {
         x.insert(i ,i);
         // y.insert(i, i);
     }
-    for(int i = 0; i < 1; i++)
+    for(int i = 0; i < 6; i++)
     {
         // x.insert(i ,i);
         y.insert(i, i);
     }
-    cout << "x: " << x << endl << "y:" << y << endl;
+    cout << "x:" << x << endl << "y:" << y << endl;
     z.merge(x, y);
     cout << "x: " << x << endl << "y:" << y << endl;
     cout << "z:" << z;
