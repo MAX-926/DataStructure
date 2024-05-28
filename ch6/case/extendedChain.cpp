@@ -20,6 +20,7 @@ class extendedChain:public extendedLinearList<T>
         void push_back(const T &element);
         void clear();
         void output(std::ostream& out)const;
+        void circularShift(int theSteps);
         //iterator:
         class iterator//使用iterator做extenedChain的get操作，如果逐个元素考察，可以将复杂度从O(listSize^2)降到O(listSize)
         {

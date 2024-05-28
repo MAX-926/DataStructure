@@ -55,6 +55,7 @@ class chain:public linearList<T>
         iterator end()const{return iterator(NULL);}
         //new ADT methods:
         void meld(chain<T> &a, chain<T> &b);
+        void merge(chain<T> &a, chain<T> &b);
     protected:
         void checkIndex(int theIndex)const;
         struct chainNode<T>*  firstNode;
