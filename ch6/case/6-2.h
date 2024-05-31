@@ -56,6 +56,11 @@ class chain:public linearList<T>
         //new ADT methods:
         void meld(chain<T> &a, chain<T> &b);
         void merge(chain<T> &a, chain<T> &b);
+        void split(chain<T> &a, chain<T> &b);
+        void insertSort();
+        void bubleSort();
+        void selectSort();
+        void rankSort();
     protected:
         void checkIndex(int theIndex)const;
         struct chainNode<T>*  firstNode;
@@ -98,12 +103,12 @@ std::ostream& operator<<(std::ostream &out, const chain<T> &theChain)
 //     }
 // }
 
-// template<class T>
-// std::ostream& operator<<(std::ostream &out, const chain<T> &theChain)
-// {
-//     theChain.output(out);
-//     return out;
-// }
+// // template<class T>
+// // std::ostream& operator<<(std::ostream &out, const chain<T> &theChain)
+// // {
+// //     theChain.output(out);
+// //     return out;
+// // }
 
 // template<class T>
 // chain<T>::chain(int initialCapacity)

@@ -533,9 +533,8 @@ void chain<T>::meld(chain<T> &a, chain<T> &b)
 //     // a.listSize = 0;
 // }
 
-
 template<class T>
-void chain<T>::merge(chain<T> &a, chain<T> &b)
+void chain<T>::merge(chain<T> &a, chain<T> &b)//worst: O(a.size + b.size) best:O(1)
 {
     while(firstNode)
     {
@@ -628,21 +627,21 @@ void chain<T>::merge(chain<T> &a, chain<T> &b)
     b.listSize = 0;
 }
 
-int main()
-{
-    chain<int> x, y, z;
-    for(int i = 0; i < 10; i++)
-    {
-        x.insert(i ,i);
-        // y.insert(i, i);
-    }
-    for(int i = 0; i < 6; i++)
-    {
-        // x.insert(i ,i);
-        y.insert(i, i);
-    }
-    cout << "x:" << x << endl << "y:" << y << endl;
-    z.merge(x, y);
-    cout << "x: " << x << endl << "y:" << y << endl;
-    cout << "z:" << z;
-}
+// int main()
+// {
+//     chain<int> x, y, z;
+//     for(int i = 0; i < 10; i++)
+//     {
+//         x.insert(i ,i);
+//         // y.insert(i, i);
+//     }
+//     for(int i = 0; i < 6; i++)
+//     {
+//         // x.insert(i ,i);
+//         y.insert(i, i);
+//     }
+//     cout << "x:" << x << endl << "y:" << y << endl;
+//     z.merge(x, y);
+//     cout << "x: " << x << endl << "y:" << y << endl;
+//     cout << "z:" << z;
+// }
