@@ -47,7 +47,6 @@ void chain<T>::selectSort()
 }
 
 //rankSort
-
 template<class T>
 void chain<T>::rankSort()//量级在O(listSize^2)
 {

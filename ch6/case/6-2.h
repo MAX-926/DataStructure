@@ -75,22 +75,22 @@ std::ostream& operator<<(std::ostream &out, const chain<T> &theChain)
 }
 
 
-// // template<class T>
-// // void chain<T>::show()const
-// // {
-// //     chainNode<T>* current = firstNode;
-// //     while(!current)
-// //     {
-// //         cout << current->element << " ";
-// //         current = current->next;
-// //     }
-// // }
-// // template<class T>
-// // ostream operator<<(ostream& out, const chain<T> &x)
-// // {
-// //     x.output(out);
-// //     return out;
-// // }
+// template<class T>
+// void chain<T>::show()const
+// {
+//     chainNode<T>* current = firstNode;
+//     while(!current)
+//     {
+//         cout << current->element << " ";
+//         current = current->next;
+//     }
+// }
+// template<class T>
+// ostream operator<<(ostream& out, const chain<T> &x)
+// {
+//     x.output(out);
+//     return out;
+// }
 
 // template<class T>
 // void chain<T>::checkIndex(int theIndex)const
