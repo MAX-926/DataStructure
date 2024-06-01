@@ -82,6 +82,13 @@ void circularListWithHeader<T>::insert(int theIndex, const T &theElement)
         s << "theIndex = " << theIndex << " listSize = " << listSize;
         throw IllegalParameter(s.str());
     }
+    if(theIndex == 0)
+    {
+        chainNode<T>* nextNode = headerNode->next;
+        headerNode->next = new chainNode<T>(theElement, nextNode);
+        ++listSize;
+        return;
+    }
     chainNode<T>* currentNode = headerNode->next;
     for(int i = 0; i < theIndex-1; i++)
         currentNode = currentNode->next;
@@ -95,6 +102,14 @@ template<class T>
 void circularListWithHeader<T>::erase(int theIndex)
 {
     checkIndex(theIndex);
+    if(theIndex == 0)
+    {
+        chainNode<T>* deleteNode = headerNode->next;
+        headerNode->next = deleteNode->next;
+        delete deleteNode;
+        --listSize;
+        return;
+    }
     chainNode<T>* currentNode = headerNode->next;
     for(int i = 0; i < theIndex-1; i++)
         currentNode = currentNode->next;

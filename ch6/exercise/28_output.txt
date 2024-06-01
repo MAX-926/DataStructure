@@ -1,0 +1,15 @@
+chain::indexOf proformance
+N	clocks	Time cost per search
+100	1000	0.117536
+1000	1000	3.89105
+10000	1143	285.75
+100000	35169	35169
+
+circularListWithHeader::indexOf proformance
+N	clocks	Time cost per search
+100	1000	0.938086
+1000	1002	7.88976
+10000	1115	371.667
+100000	49660	49660
+
+为什么差异这么大，circularListWithHeader应该表现更好，事实却非如此

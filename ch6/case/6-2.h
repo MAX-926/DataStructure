@@ -183,8 +183,6 @@ std::ostream& operator<<(std::ostream &out, const chain<T> &theChain)
 //     return i;
 // }
 
-
-
 // // template<class T>
 // // void chain<T>::insert(int theIndex, const T& theElement)
 // // {// Insert theElement so that its index is theIndex.

@@ -3,22 +3,27 @@
 #include"../case/6-2.h"
 #include"../case/6-13.h"
 #include<time.h>
+#include<fstream>
+
 using namespace std;
 
 int main()
 {
+    // circularListWithHeader<int> x;
+    chain<int> y;
+    ofstream out;
+    out.open("28_output.txt", ios::app);
     time_t clocksPerMillis = CLOCKS_PER_SEC / 1000;
     int numsOfRepetions = 0;
     int inflateExp = 10;
     cout << "N" << '\t' << "clocks" << '\t' << "Time cost per search" << endl;
+    // out << "N" << '\t' << "clocks" << '\t' << "Time cost per search" << endl;
     for(int n = 100; n <= 100000; n*=inflateExp)
     {
         numsOfRepetions = 0;
         clock_t startTime = clock();
         do
         {
-            // circularListWithHeader<int> x;
-            chain<int> y;
             ++numsOfRepetions;
             for(int k = 0; k < n; k++)
                 y.insert(k, k+1);
@@ -28,7 +33,9 @@ int main()
         }while(clock()-startTime < 1000);
         double elapsedTime = (double)clock() - startTime;
         cout << n << '\t' << elapsedTime << '\t' << elapsedTime/clocksPerMillis/numsOfRepetions << endl;
+        // out << n << '\t' << elapsedTime << '\t' << elapsedTime/clocksPerMillis/numsOfRepetions << endl;
     }
+    out.close();
     // circularListWithHeader<int> x;
     // for(int i = 0; i < 10; i++)
     //     x.insert(i, i);
@@ -42,7 +49,7 @@ int main()
 // 10000   1023    1023
 // 100000  46795   46795
 
-//chain::indexOf
+// chain::indexOf
 // N       clocks  Time cost per search
 // 100     1000    0.029976
 // 1000    1000    1.81818
