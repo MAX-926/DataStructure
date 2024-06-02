@@ -26,20 +26,22 @@ void circularListWithReverse<T>::reverse()
 
 }
 
-int main()
-{
-    circularListWithReverse<int> x;
-    for(int i = 0; i <2; i++)
-        x.insert(i, i+1);
-    std::cout << x << std::endl;
-    x.reverse();
-    std::cout << x << std::endl;
-    // x.push_back(26);
-    // std::cout << x << std::endl;
-    // x.push_back(26);
-    // x.insert(0, 26);
-    // x.erase(0);
-    x.erase(x.size()-1);
-    std::cout << x << std::endl;
-    std::cout << x.size() << std::endl;
-}
+// int main()
+// {
+//     circularListWithReverse<int> x;
+//     for(int i = 0; i <2; i++)
+//         x.insert(i, i+1);
+//     std::cout << x << std::endl;
+//     x.reverse();
+//     std::cout << x << std::endl;
+//     // x.push_back(26);
+//     // std::cout << x << std::endl;
+//     // x.push_back(26);
+//     // x.insert(0, 26);
+//     // x.erase(0);
+//     x.erase(0);
+//     x.erase(0);
+//     x.erase(0);
+//     std::cout << x << std::endl;
+//     std::cout << x.size() << std::endl;
+// }
