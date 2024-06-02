@@ -9,10 +9,8 @@ using namespace std;
 
 int main()
 {
-    // circularListWithHeader<int> x;
-    chain<int> y;
     ofstream out;
-    out.open("28_output.txt", ios::app);
+    // out.open("28_output.txt", ios::app);
     time_t clocksPerMillis = CLOCKS_PER_SEC / 1000;
     int numsOfRepetions = 0;
     int inflateExp = 10;
@@ -20,6 +18,8 @@ int main()
     // out << "N" << '\t' << "clocks" << '\t' << "Time cost per search" << endl;
     for(int n = 100; n <= 100000; n*=inflateExp)
     {
+        // circularListWithHeader<int> x;
+        chain<int> y;
         numsOfRepetions = 0;
         clock_t startTime = clock();
         do
@@ -35,7 +35,7 @@ int main()
         cout << n << '\t' << elapsedTime << '\t' << elapsedTime/clocksPerMillis/numsOfRepetions << endl;
         // out << n << '\t' << elapsedTime << '\t' << elapsedTime/clocksPerMillis/numsOfRepetions << endl;
     }
-    out.close();
+    // out.close();
     // circularListWithHeader<int> x;
     // for(int i = 0; i < 10; i++)
     //     x.insert(i, i);
@@ -44,14 +44,23 @@ int main()
 
 // circularListWithHeader::indexOf
 // N       clocks  Time cost per search
-// 100     1000    0.215054
-// 1000    1010    15.303
-// 10000   1023    1023
-// 100000  46795   46795
+// 100     1001    0.810526
+// 1000    1003    4.91667
+// 10000   1159    289.75
+// 100000  45707   45707
 
 // chain::indexOf
 // N       clocks  Time cost per search
-// 100     1000    0.029976
-// 1000    1000    1.81818
-// 10000   1014    253.5
-// 100000  26729   26729
+// 100     1000    0.0297327
+// 1000    1002    2.16883
+// 10000   1079    269.75
+// 100000  37900   37900
+
+// int main()
+// {
+//     circularListWithHeader<int> x;
+//     for(int i = 0; i < 10; i++)
+//         x.insert(i, i+1);
+//     x.insert(-1, 26);
+//     cout << x << endl;
+// }

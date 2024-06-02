@@ -1,15 +1,28 @@
-chain::indexOf proformance
-N	clocks	Time cost per search
-100	1000	0.117536
-1000	1000	3.89105
-10000	1143	285.75
-100000	35169	35169
 
-circularListWithHeader::indexOf proformance
-N	clocks	Time cost per search
-100	1000	0.938086
-1000	1002	7.88976
-10000	1115	371.667
-100000	49660	49660
+circularListWithHeader::all process
+N       clocks  Time cost per all process
+100     1001    0.742582
+1000    1001    4.06911
+10000   1213    303.25
+100000  69845   69845
+
+N       clocks  Time cost per insert
+100     1000    0.0324454
+1000    1000    2.09644
+10000   1287    321.75
+100000  43390   43390
+
+chain::indexOf
+N       clocks  Time cost per all process
+100     1000    0.0337473
+1000    1001    2.18083
+10000   1037    259.25
+100000  36436   36436
+
+N       clocks  Time cost per insert
+100     1000    0.0335818
+1000    1000    2.09205
+10000   1059    264.75
+100000  47429   47429
 
 为什么差异这么大，circularListWithHeader应该表现更好，事实却非如此

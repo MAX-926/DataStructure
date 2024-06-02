@@ -82,15 +82,16 @@ void circularListWithHeader<T>::insert(int theIndex, const T &theElement)
         s << "theIndex = " << theIndex << " listSize = " << listSize;
         throw IllegalParameter(s.str());
     }
-    if(theIndex == 0)
-    {
-        chainNode<T>* nextNode = headerNode->next;
-        headerNode->next = new chainNode<T>(theElement, nextNode);
-        ++listSize;
-        return;
-    }
-    chainNode<T>* currentNode = headerNode->next;
-    for(int i = 0; i < theIndex-1; i++)
+    // if(theIndex == 0)//Be carefull!!
+    // {
+    //     chainNode<T>* nextNode = headerNode->next;
+    //     headerNode->next = new chainNode<T>(theElement, nextNode);
+    //     ++listSize;
+    //     return;
+    // }
+    // chainNode<T>* currentNode = headerNode->next;
+    chainNode<T>* currentNode = headerNode;
+    for(int i = 0; i < theIndex; i++)
         currentNode = currentNode->next;
     chainNode<T>* nextNode = currentNode->next;
     currentNode->next = new chainNode<T>(theElement, nextNode);
