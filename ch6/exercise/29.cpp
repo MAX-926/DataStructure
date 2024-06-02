@@ -20,6 +20,8 @@ class circularList:public linearList<T>
         void clear();//O(listSize)
         void push_back(const T &theElement);//O(1)
         void output(std::ostream &out)const;//O(listSize)
+    //New ADT Methods:
+        void merge(circularList<T> &a, circularList<T> &b);
     protected:
         void checkIndex(int theIndex)const;//O(1)
         chainNode<T>* firstNode;
@@ -49,12 +51,12 @@ circularList<T>::~circularList()
     while(listSize != 1)
     {
         chainNode<T>* nextNode = firstNode->next;
-        // std::cout << "destroy Node:" << firstNode->element << std::endl;
+        std::cout << "destroy Node:" << firstNode->element << std::endl;
         delete firstNode;
         firstNode = nextNode;
         listSize--;
     }
-    // std::cout << "destroy Node:" << firstNode->element << std::endl;
+    std::cout << "destroy Node:" << firstNode->element << std::endl;
     delete firstNode;
     --listSize;
     firstNode = 0;
@@ -87,12 +89,12 @@ int circularList<T>::indexOf(const T &theElement)const
 {
     chainNode<T>* currentNode = firstNode;
     int index = 0;
-    while(currentNode != NULL && currentNode->element != theElement)
+    while(currentNode->next != firstNode && currentNode->element != theElement)
     {
          currentNode = currentNode->next;
          index++;
     }
-    if(currentNode == NULL) return -1;
+    if(currentNode->element != theElement) return -1;
     else return index;
 }
 
@@ -185,7 +187,8 @@ void circularList<T>::erase(int theIndex)
 template<class T>
 void circularList<T>::clear()
 {
-    while(listSize != 1)
+    if(listSize == 0) return;
+    while(listSize > 1)
     {
         chainNode<T>* nextNode = firstNode->next;
         // std::cout << "delete Node:" << firstNode->element << std::endl;
@@ -205,7 +208,8 @@ void circularList<T>::push_back(const T &theElement)//O(1)
 {
     if(listSize == 0)
     {
-        firstNode = new chainNode<T>(theElement, firstNode);
+        firstNode = new chainNode<T>(theElement);//明確計算順序
+        firstNode->next = firstNode;
         lastNode = firstNode;
         ++listSize;
         return;
@@ -228,6 +232,11 @@ void circularList<T>::output(std::ostream& out)const
         return;
     }
     chainNode<T>* currentNode = firstNode;
+    if(listSize == 1)
+    {
+        out << currentNode->element;
+        return;
+    }
     while(currentNode->next != firstNode)
     // while(1)
     {
@@ -238,14 +247,103 @@ void circularList<T>::output(std::ostream& out)const
     return;
 }
 
+//NEW ADT METHODS:
+template<class T>
+void circularList<T>::merge(circularList<T> &a, circularList<T> &b)
+{
+    clear();
+    if(!(a.listSize + b.listSize)) return;
+    // chainNode<T>* currentNodeA = a.firstNode, *currentNodeB = b.firstNode, currentNode = firstNode;
+    bool cross = true;
+    int indexA = 0, indexB = 0;
+    if(listSize == 0)
+    {
+        if(a.firstNode->element >= b.firstNode->element)
+        {
+            firstNode = b.firstNode;
+            b.firstNode = b.firstNode->next;
+            indexB++;
+        }
+        else if(a.firstNode->element < b.firstNode->element)
+        {
+            firstNode = a.firstNode;
+            a.firstNode = a.firstNode->next;
+            indexA++;
+        }
+    }
+    chainNode<T>* currentNode = firstNode;
+    while( indexA < a.listSize && indexB < b.listSize )
+    {
+        if(a.firstNode->element > b.firstNode->element)
+        {
+            currentNode->next = b.firstNode;
+            currentNode = currentNode->next;
+            b.firstNode = b.firstNode->next;
+            indexB++;
+            continue;
+        }
+        else if(a.firstNode->element < b.firstNode->element)
+        {
+            currentNode->next = a.firstNode;
+            currentNode = currentNode->next;
+            a.firstNode = a.firstNode->next;
+            indexA++;
+            continue;
+        }
+        else
+        {
+            if(cross)
+            {
+                currentNode->next = a.firstNode;
+                currentNode = currentNode->next;
+                a.firstNode = a.firstNode->next;
+                indexA++;
+                cross = !cross;
+                continue;
+            }
+            else
+            {
+                currentNode->next = b.firstNode;
+                currentNode = currentNode->next;
+                b.firstNode = b.firstNode->next;
+                indexB++;
+                cross = !cross;
+                continue;
+            }
+        }
+    }
+    while(indexA < a.listSize)
+    {
+        currentNode->next = a.firstNode;
+        a.firstNode = a.firstNode->next;
+        currentNode = currentNode->next;
+        indexA++;
+    }
+    while(indexB < b.listSize)
+    {
+        currentNode->next = b.firstNode;
+        currentNode = currentNode->next;
+        b.firstNode = b.firstNode->next;
+        indexB++;
+    }
+    lastNode = currentNode;
+    currentNode->next = firstNode;
+    listSize = a.listSize + b.listSize;
+    a.listSize = 0;
+    b.listSize = 0;
+    a.firstNode = 0;
+    b.firstNode = 0;
+}
+
+
 // int main()
 // {
-//     circularList<int> x;
-//     for(int i = 0; i < 10; i++)
-//         x.insert(i, i+1);
-//     std::cout << x << std::endl;
-//     x.clear();
-//     std::cout << x << std::endl;
-//     x.insert(0, 26);
-//     std::cout << x << std::endl;
+//     // circularList<int> x;    
+//     // for(int i = 0; i < 10; i++)
+//     //     x.insert(i, i+1);
+//     // std::cout << x << std::endl;
+//     // x.clear();
+//     // std::cout << x << std::endl;
+//     // x.insert(0, 26);
+//     // std::cout << x << std::endl;
 // }

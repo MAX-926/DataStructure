@@ -1,5 +1,6 @@
 #ifndef CH6_6_1_H
 #define CH6_6_1_H
+#include<iostream>
 template<class T>
 struct chainNode
 {
