@@ -22,6 +22,9 @@ class circularList:public linearList<T>
         void output(std::ostream &out)const;//O(listSize)
     //New ADT Methods:
         void merge(circularList<T> &a, circularList<T> &b);
+        void split(circularList<T> &a, circularList<T> &b);
+        //new erase:
+        void erase_new(int theIndex);
     protected:
         void checkIndex(int theIndex)const;//O(1)
         chainNode<T>* firstNode;
@@ -51,12 +54,12 @@ circularList<T>::~circularList()
     while(listSize != 1)
     {
         chainNode<T>* nextNode = firstNode->next;
-        std::cout << "destroy Node:" << firstNode->element << std::endl;
+        // std::cout << "destroy Node:" << firstNode->element << std::endl;
         delete firstNode;
         firstNode = nextNode;
         listSize--;
     }
-    std::cout << "destroy Node:" << firstNode->element << std::endl;
+    // std::cout << "destroy Node:" << firstNode->element << std::endl;
     delete firstNode;
     --listSize;
     firstNode = 0;
@@ -79,7 +82,7 @@ T& circularList<T>::get(int theIndex)const
 {
     checkIndex(theIndex);//O(1)
     chainNode<T>* currentNode = firstNode;//O(1)
-    for(int i = 0; i < theIndex; i++)//O(index)
+    for(int i = 0; i < theIndex; i++)//O(theIndex)
         currentNode = currentNode->next;
     return currentNode->element;//O(1)
 }
@@ -334,7 +337,6 @@ void circularList<T>::merge(circularList<T> &a, circularList<T> &b)
     a.firstNode = 0;
     b.firstNode = 0;
 }
-
 
 // int main()
 // {
