@@ -42,10 +42,7 @@ class extendedChain:public extendedLinearList<T>
                     return old;
                 }
                 //相等检验
-                bool operator==(const iterator &theIter)const
-                {
-                    return node == theIter.node;
-                }
+                bool operator==(const iterator &theIter)const{ return node == theIter.node;}
                 bool operator!=(const iterator &theIter)const{ return node != theIter.node;}
             protected:
                 struct chainNode<T>* node;

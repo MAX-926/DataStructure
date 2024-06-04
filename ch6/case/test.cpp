@@ -17,8 +17,19 @@ int main()
     for(int i = 0; i < 10; i++)
         x.insert(i, i+1);
     cout << x << endl;
-    x.erase(0);
+//     x.erase(0);
+//     cout << x << endl;
+//     x.insert(0, 1);
+//     cout << x << endl;
+    x.push_back(26);
+    x.erase(x.size()-1);
+    x.push_back(26);
+    // x.insert(x.size(), 26);
     cout << x << endl;
-    x.insert(0, 1);
+    x.clear();
     cout << x << endl;
+    x.push_back(26);
+    cout << x << endl;
+    x.insert(0, 28);
+    cout << x.indexOf(26) << endl;
 }

@@ -18,9 +18,35 @@ class circularListWithHeader:linearList<T>
         void erase(int theIndex);
         void insert(int theIndex, const T& theElement);
         void output(std::ostream& out)const;
+        //NEW ADT METHODS:
+        void push_back(const T &theElement);
+        void clear();
+        void reverse();
+        void meld(const circularListWithHeader<T> &a, const circularListWithHeader<T> &b);
+        void meld(circularListWithHeader<T> &a, circularListWithHeader<T> &b);
+        //iterator
+        class iterator
+        {
+            public:
+                iterator(chainNode<T>* node = NULL){theNode = node;}
+                //forward op
+                iterator& operator++(){theNode = theNode->next; return *this;}
+                iterator operator++(int){iterator old(theNode); theNode = theNode->next; return old;}
+                //equalization verify
+                bool operator==(const iterator &iter)const{return iter.theNode == theNode;}
+                bool operator!=(const iterator &iter)const{return iter.theNode != theNode;}
+                //解引用
+                T& operator*()const{return theNode->element;}
+                T* operator->()const{return &(theNode->element);}
+            protected:
+                struct chainNode<T>* theNode;
+        };
+        iterator begin()const{return iterator(headerNode->next);}
+        iterator end()const{return iterator(lastNode);}
     protected:
         void checkIndex(int theIndex)const;
         chainNode<T>* headerNode;
+        chainNode<T>*  lastNode;
         int listSize;
 };
 
@@ -95,6 +121,8 @@ void circularListWithHeader<T>::insert(int theIndex, const T &theElement)
         currentNode = currentNode->next;
     chainNode<T>* nextNode = currentNode->next;
     currentNode->next = new chainNode<T>(theElement, nextNode);
+    if(theIndex == listSize)
+        lastNode = currentNode->next;
     ++listSize;
     return;
 }
@@ -117,6 +145,8 @@ void circularListWithHeader<T>::erase(int theIndex)
     chainNode<T>* deleteNode = currentNode->next;
     currentNode->next = currentNode->next->next;
     delete deleteNode;
+    if(theIndex == listSize-1)
+        lastNode = currentNode;
     --listSize;
     return;
 }
@@ -126,6 +156,7 @@ circularListWithHeader<T>::circularListWithHeader()
 {
     //創建空節點
     headerNode = new chainNode<T>(0);
+    lastNode = 0;
     headerNode->next = headerNode;//circularList为空表的条件
     listSize = 0;
 }
@@ -162,6 +193,44 @@ void circularListWithHeader<T>::output(std::ostream& out)const
         currentNode = currentNode->next;
     }
     return;
+}
+
+template<class T>
+void circularListWithHeader<T>::push_back(const T &theElement)//O(1)
+{
+    if(!listSize)//如果当前线性表为空：
+    {
+        headerNode->next = new chainNode<T>(theElement);
+        headerNode->next->next = headerNode;
+        lastNode = headerNode->next;
+        ++listSize;
+        return;
+    }
+    else
+    {
+        lastNode->next = new chainNode<T>(theElement);
+        lastNode = lastNode->next;
+        lastNode->next = headerNode;
+        ++listSize;
+        return;
+    }
+}
+
+template<class T>
+void circularListWithHeader<T>::clear()//O(listSize)
+{
+    if(!listSize) return;
+    else
+    {
+        while(headerNode->next && headerNode->next != headerNode)
+        {
+            chainNode<T>* deleteNode = headerNode->next;
+            headerNode->next = headerNode->next->next;
+            delete deleteNode;
+        }
+        listSize = 0;
+        lastNode = 0;
+    }
 }
 
 // template<class T>
