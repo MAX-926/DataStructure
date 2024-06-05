@@ -24,6 +24,7 @@ class circularListWithHeader:linearList<T>
         void reverse();
         void meld(const circularListWithHeader<T> &a, const circularListWithHeader<T> &b);
         void meld(circularListWithHeader<T> &a, circularListWithHeader<T> &b);
+        void merge(circularListWithHeader<T> &a, circularListWithHeader<T> &b);
         //iterator
         class iterator
         {
