@@ -70,6 +70,8 @@ class doublyLinkedList:public extendedLinearList<T>
         void meld(doublyLinkedList<T> &a, doublyLinkedList<T> &b);
         //47.cpp merge():
         void merge(doublyLinkedList<T> &a, doublyLinkedList<T> &b);
+        //48.cpp split()
+        void split(doublyLinkedList<T> &a, doublyLinkedList<T> &b);
     protected:
         void checkIndex(int theIndex)const;
         bdChainNode<T>* firstNode;
