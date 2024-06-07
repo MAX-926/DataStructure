@@ -1,19 +1,19 @@
 #include"29.cpp"
 
 template<class T>
-void circularList<T>::split(circularList<T> &a, circularList<T> &b)
+void circularList<T>::split(circularList<T> &a, circularList<T> &b)//O(aSize + bSize + thisListSize)
 {//a中包含c中索引為奇數的元素，b包含其餘元素
     //this鏈表爲空時:
     if(!listSize) return;
     //this鏈表非空時:
     else
     {
-        a.clear();
-        b.clear();
+        a.clear();//O(aSize)
+        b.clear();//O(bSize)
         //初始化b表頭
         b.firstNode = firstNode;
         firstNode = firstNode->next;
-        if(listSize == 1)
+        if(listSize == 1)//O(1)
         {
             //奇數索引給b鏈表
             //b表的初始化
@@ -26,7 +26,7 @@ void circularList<T>::split(circularList<T> &a, circularList<T> &b)
             --listSize;
             return;
         }
-        if(listSize == 2)
+        if(listSize == 2)//O(1)
         {
             b.firstNode->next = b.firstNode;//綁定鏈尾
             b.lastNode = b.firstNode;//設定lastNode
@@ -42,7 +42,7 @@ void circularList<T>::split(circularList<T> &a, circularList<T> &b)
             listSize -= 2;
             return;
         }
-        else//listSize > 2
+        else//listSize > 2, O(thisListSize)
         {
             b.lastNode = b.firstNode;
             b.lastNode->next = b.firstNode;

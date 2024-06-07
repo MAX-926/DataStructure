@@ -17,7 +17,7 @@ void circularListWithHeader<T>::reverse()//O(listSize^2)
 }
 
 template<class T>
-void non_memberReverse(circularListWithHeader<T> &x)
+void non_memberReverse(circularListWithHeader<T> &x)//O(listSize^2)
 {
     x.reverse();
 }

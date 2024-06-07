@@ -3,14 +3,14 @@
 #include"../case/6-13.h"
 
 template<class T>
-void merge(const circularListWithHeader<T> &a, const circularListWithHeader<T> &b, circularListWithHeader<T> &c)
+void merge(const circularListWithHeader<T> &a, const circularListWithHeader<T> &b, circularListWithHeader<T> &c)//O(aSize + bSize + cSize)
 {
-    c.clear();
+    c.clear();//O(cSize)
     int indexA = 0, indexB = 0;
     int lsA = a.size(), lsB = b.size();
     bool crossed = true;
     auto iterA = a.begin(), iterB = b.begin();
-    for(; indexA < lsA && indexB < lsB; )
+    for(; indexA < lsA && indexB < lsB; )//O(aSize + bSize)
     {
         if(*iterA < *iterB)
         {
@@ -50,12 +50,12 @@ void merge(const circularListWithHeader<T> &a, const circularListWithHeader<T> &
     }
 }
 
-template<class T>
-void circularListWithHeader<T>::merge(circularListWithHeader<T> &a, circularListWithHeader<T> &b)
 //在这个算法中， 抛弃节点时不要将节点作为headerNode，这样会导致后续索引headerNode->next时出现错误：因为在获取nextNode前就修改了previous的next
 //不应该依赖一个会发生修改的节点去索引下一个值！！！
+template<class T>
+void circularListWithHeader<T>::merge(circularListWithHeader<T> &a, circularListWithHeader<T> &b)//o(lsA + lsB + lsC)
 {
-    clear();
+    clear();//O(thisSize)
     int lsA = a.listSize, lsB = b.listSize;
     int indexA = 0, indexB = 0;
     bool crossed = true;
@@ -65,7 +65,7 @@ void circularListWithHeader<T>::merge(circularListWithHeader<T> &a, circularList
     b.headerNode = b.headerNode->next;
     
     // chainNode<T>* currentNodeA = a.headerNode->next, *currentNodeB = b.headerNode->next;
-    for(; indexA < lsA && indexB < lsB; )
+    for(; indexA < lsA && indexB < lsB; )//O(lsA + lsB)
     {
         // ! if(a.headerNode->next->element < b.headerNode->next->element)//使用迭代器优化对链条数据的访问
         if(a.headerNode->element < b.headerNode->element)//使用迭代器优化对链条数据的访问
