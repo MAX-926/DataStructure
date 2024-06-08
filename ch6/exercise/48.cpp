@@ -119,18 +119,36 @@ void doublyLinkedList<T>::split(doublyLinkedList<T> &a, doublyLinkedList<T> &b)
     }
 }
 
-int main()
-{
-    doublyLinkedList<int> a, b, c;
-    for(int i = 0; i < 3; i++)
-        c.insert(i, i);
-    for(int i = 0; i < 5; i++)
-    {
-        a.insert(i, i+1);
-        b.insert(i, i+1);
-    }
-    std::cout << "a:" << a << std::endl << "b:" << b << std::endl << "c:" << c << std::endl;
-    // split(a, b, c);
-    c.split(a, b);
-    std::cout << "a:" << a << std::endl << "b:" << b << std::endl << "c:" << c << std::endl;
-}
+// int main()
+// {
+//     doublyLinkedList<int> a, b, c;
+//     for(int i = 0; i < 10; i++)
+//         c.insert(i, i);
+//     for(int i = 0; i < 5; i++)
+//     {
+//         a.insert(i, i+1);
+//         b.insert(i, i+1);
+//     }
+//     std::cout << "a:" << a << std::endl << "b:" << b << std::endl << "c:" << c << std::endl;
+//     // split(a, b, c);
+//     c.split(a, b);
+//     std::cout << "a:" << a << std::endl << "b:" << b << std::endl << "c:" << c << std::endl;
+    
+//     c.insert(0, 26);
+//     c.insert(c.size(), 25);
+//     c.push_back(28);
+//     a.insert(0, 26);
+//     a.insert(a.size(), 25);
+//     a.push_back(28);
+//     b.insert(0, 26);
+//     b.insert(b.size(), 25);
+//     b.push_back(28);
+//     std::cout << "a:" << a << std::endl << "b:" << b << std::endl << "c:" << c << std::endl;
+//     c.erase(0);
+//     c.erase(c.size()-1);
+//     a.erase(0);
+//     a.erase(a.size()-1);
+//     b.erase(0);
+//     b.erase(b.size()-1);
+//     std::cout << "a:" << a << std::endl << "b:" << b << std::endl << "c:" << c << std::endl;
+// }

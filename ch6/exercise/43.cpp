@@ -286,7 +286,7 @@ void doublyLinkedList<T>::clear()
     while(firstNode != NULL)
     {
         bdChainNode<T>* nextNode = firstNode->next;
-        // std::cout << "delete Node: " << firstNode->element << std::endl; 
+        std::cout << "delete Node: " << firstNode->element << std::endl; 
         delete firstNode;
         firstNode = nextNode;
     }
@@ -337,35 +337,40 @@ void doublyLinkedList<T>::listLinker(doublyLinkedList<T> &theDLL)
     }
 }
 
-// int main()
-// {
-//     doublyLinkedList<int> x;
-//     for(int i = 0; i < 3; i++)
-//         x.insert(i, i+1);
-//     doublyLinkedList<int> y = x;
-//     x.listLinker(y);
-//     x.push_back(26);
-//     std::cout << "x:" << x << std::endl << "y:" << y << std::endl;
-//     // auto iter = x.begin();
-//     auto iter = x.end();
-//     // while(iter != x.end())
-//     while(iter != x.begin())
-//     {
-//     //     // std::cout << *(iter++) << " ";
-//         std::cout << *(iter--) << " ";
-//     }
-//     std::cout << *iter << std::endl;
-//     // std::cout << *iter << std::endl;
-//     // std::cout << x.size();
-//     // std::cout << std::endl;
-//     // std::cout << "&x-&y:" << &x-&y << std::endl;
-//     // x.insert(0, 26);
-//     // std::cout << x << std::endl;
-//     // x.erase(3);
-//     // x.push_back(26);
-//     // // x.insert(0, 26);
-//     // x.clear();
-//     // x.insert(0, 1);
-//     // x.push_back(26);
-//     // std::cout << x << std::endl;
-// }
+int main()
+{
+    // doublyLinkedList<int> x;
+    // for(int i = 0; i < 3; i++)
+    //     x.insert(i, i+1);
+    // doublyLinkedList<int> y = x;
+    // x.listLinker(y);
+    // x.push_back(26);
+    // std::cout << "x:" << x << std::endl << "y:" << y << std::endl;
+    // // auto iter = x.begin();
+    // auto iter = x.end();
+    // // while(iter != x.end())
+    // while(iter != x.begin())
+    // {
+    // //     // std::cout << *(iter++) << " ";
+    //     std::cout << *(iter--) << " ";
+    // }
+    // std::cout << *iter << std::endl;
+    // // std::cout << *iter << std::endl;
+    // // std::cout << x.size();
+    // // std::cout << std::endl;
+    // // std::cout << "&x-&y:" << &x-&y << std::endl;
+    // // x.insert(0, 26);
+    // // std::cout << x << std::endl;
+    // // x.erase(3);
+    // // x.push_back(26);
+    // // // x.insert(0, 26);
+    // // x.clear();
+    // // x.insert(0, 1);
+    // // x.push_back(26);
+    // // std::cout << x << std::endl;
+    doublyLinkedList<int> a;
+    for(int i = 0; i < 10; i++)
+        a.insert(i, i+1);
+    doublyLinkedList<int> b = a;
+    std::cout << "a: " << a << std::endl << "b: " << b << std::endl;   
+}
