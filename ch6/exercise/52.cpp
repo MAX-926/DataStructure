@@ -1,4 +1,4 @@
-#include"49.cpp"
+#include"49.h"
 
 template<class T>
 void meld(const doubleCircularList<T> &a, const doubleCircularList<T> &b, doubleCircularList<T> &c)

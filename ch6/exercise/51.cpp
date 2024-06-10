@@ -1,4 +1,4 @@
-#include"49.cpp"
+#include"49.h"
 
 template<class T>
 void doubleCircularList<T>::listLinker(doubleCircularList<T> &theDCL)//O(1)

@@ -1,4 +1,4 @@
-#include"49.cpp"
+#include"49.h"
 
 template<class T>
 void reverse(doubleCircularList<T> &theDCL)//O(listSize)
@@ -48,23 +48,23 @@ void doubleCircularList<T>::reverse()//O(listSize)
     }
 }
 
-int main()
-{
-    doubleCircularList<int> a;
-    for(int i = 0; i < 0; i++)
-        a.insert(i, i+1);
-    std::cout << "a: " << a << std::endl;
-    reverse(a);
-    a.reverse();
-    std::cout << "a: " << a << std::endl;
-    auto iterA = a.end();
-    try
-    {
-    // for(int i = 0; i  < 5; i++)
-    //     std::cout << *(iterA--) << " ";
-    std::cout << *iterA;
-    }catch(IllegalParameter ip){ip.outputMessage();}
-    // a.push_back(26);
-    // a.insert(0, 26);
-    // std::cout << "a: " << a << std::endl;
-}
+// int main()
+// {
+//     doubleCircularList<int> a;
+//     for(int i = 0; i < 0; i++)
+//         a.insert(i, i+1);
+//     std::cout << "a: " << a << std::endl;
+//     reverse(a);
+//     a.reverse();
+//     std::cout << "a: " << a << std::endl;
+//     auto iterA = a.end();
+//     try
+//     {
+//     // for(int i = 0; i  < 5; i++)
+//     //     std::cout << *(iterA--) << " ";
+//     std::cout << *iterA;
+//     }catch(IllegalParameter ip){ip.outputMessage();}
+//     // a.push_back(26);
+//     // a.insert(0, 26);
+//     // std::cout << "a: " << a << std::endl;
+// }
