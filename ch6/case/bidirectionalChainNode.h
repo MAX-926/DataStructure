@@ -23,8 +23,8 @@ template<class T>
 struct bdChainNode
 {
     bdChainNode(const T& theElement = 0, 
-                           bdChainNode<T>* theNext = NULL, 
-                           bdChainNode<T>* thePrevious = NULL)
+                           bdChainNode<T>* theNext = nullptr, 
+                           bdChainNode<T>* thePrevious = nullptr)
                            {
                                element = theElement;
                                next = theNext;

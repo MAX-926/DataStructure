@@ -94,4 +94,14 @@ class illegalParameter
         string msg;
 };
 
+template<class T>
+void __HeaderList_fluencyTest(const T& theObj)
+{
+    auto iter = theObj.end();
+    int size = theObj.size();
+    for(int i = 0; i < 2*size + 1; i++)
+        std::cout << *(iter--) << " ";
+    std::cout << std::endl;
+}
+
 #endif // TOOL_H ///:~
