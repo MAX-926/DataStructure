@@ -3,6 +3,19 @@
 #include<iostream>
 #include<string>
 using namespace std;
+
+template<class T>
+void output_2DArray(const T** x, int r, int c)
+{
+    for(int i = 0; i < r; i++)
+        for(int j = 0; j < c; j++)
+        {
+            cout << x[i][j] << " ";
+            if(j % (c-1) == 0 && j != 0)
+                cout << endl;
+        }
+}
+
 template<class T>
 void output_2DArray_wideUse(T ** &x, int numberOfRows, int rowSize[])
 {
@@ -92,6 +105,24 @@ class illegalParameter
         void showMsg(){cout << msg << endl;}
     private:
         string msg;
+};
+
+class matrixIndexOutOfBounds
+{
+    public:
+        matrixIndexOutOfBounds(string s = "index out of bounds"){message = s;}
+        void outputMessage()const{cout << message;}
+    private:
+        string message;
+};
+
+class matrixSizeMimatch
+{
+    public:
+        matrixSizeMimatch(string s = "matrix size mismatch"):message(s){}
+        void outputMessage(){cout << message;}
+    private:
+        string message;
 };
 
 template<class T>

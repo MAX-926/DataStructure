@@ -1,0 +1,7 @@
+//k维数组的行主映射函数：
+map(i1, i2, i3, ..., ik) = u2*u3*...*uk*i1 + u3*u4*...*uk*i2 + ... + uk*i(k-1) + ik
+
+notice that
+map(i1, i2, i3, ..., ik) = map(i1, i2, i3, ..., i(k-1))*uk + ik
+
+for k > 1
