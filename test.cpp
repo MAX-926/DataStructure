@@ -150,32 +150,43 @@
 // // }
 
 
-#include"ch5/case/5-12.h"
+// #include"ch5/case/5-12.h"
+
+// int main()
+// {
+//     try
+//     {
+//     vectorList<int> x(10);
+//     for(int i = 0; i < 5; i++)
+//         x.insert(i, i+1);
+//     // int i = 0;
+//     // x.insert(0, 1);
+//     // vectorList<int>::iterator iter = x.end();
+//     // std::cout << *(iter);
+//     // *iter = 6;
+//     // iter = x.begin(); 
+//     // while(iter <= x.end())
+//     // {
+//     //     std::cout << *iter << " ";
+//     //     iter++;
+//     // }
+
+//     // std::cout << std::endl;
+//     x.erase(3);
+//     std::cout << x;
+//     // int tmp = x.get(0);
+//     // x.erase(0);
+//     // std::cout << x.indexOf(2);
+//     }catch(IllegalParameter ip){ip.outputMessage();}
+// }
 
 int main()
 {
-    try
-    {
-    vectorList<int> x(10);
-    for(int i = 0; i < 5; i++)
-        x.insert(i, i+1);
-    // int i = 0;
-    // x.insert(0, 1);
-    // vectorList<int>::iterator iter = x.end();
-    // std::cout << *(iter);
-    // *iter = 6;
-    // iter = x.begin(); 
-    // while(iter <= x.end())
-    // {
-    //     std::cout << *iter << " ";
-    //     iter++;
-    // }
-
-    // std::cout << std::endl;
-    x.erase(3);
-    std::cout << x;
-    // int tmp = x.get(0);
-    // x.erase(0);
-    // std::cout << x.indexOf(2);
-    }catch(IllegalParameter ip){ip.outputMessage();}
+    int **x;
+    x = new int*[4];
+    for(int i = 0; i < 4; i++)
+        x[i] = new int[3];
+    for(int i = 0; i < 4; i++)
+        delete []x[i];
+    delete []x;
 }

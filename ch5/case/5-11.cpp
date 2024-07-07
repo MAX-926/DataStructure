@@ -75,10 +75,16 @@ class arrayList:public linearList<T>
 
         //取出指针element
         T* getEle(){return element;}
+        //把数组的元素个数改为newSize,必要时增大数组容量
+        void reSet(int newSize);
+        //使元素theElement成为表中索引为theIndex的元素
+        void set(int theIndex, const T& theElement);
+        //使表中元素个数为0
+        void clear();
     protected:
         void checkIndex(int theIndex) const;// 若索引theIndex无效，则抛出异常
         T* element;// 存储线性表元素的一维数组
-        int arrayLength;// 线性表容量
+        int arrayLength;// 线性表容量 
         int listSize;// 线性表元素个数
 };
 
@@ -198,19 +204,58 @@ std::ostream& operator<<(std::ostream &out, const arrayList<T> &x)
     x.output(out); return out;
 }
 
-
-int main()
+template<class T>
+void arrayList<T>::reSet(int newSize)
 {
-    arrayList<int> x(5);
-    x.insert(0, 1);
-    x.insert(1, 2);
-    x.insert(2, 3);
-    x.insert(3, 4);
-    x.insert(4, 5);
-    arrayList<int>::iterator it;
-    std::reverse(x.begin(), x.end());
-    int sum = std::accumulate(x.begin(), x.end(), 0);
-    std::cout << sum << std::endl;
-    for(it = x.begin();it != x.end(); it++)
-        std::cout << *it << " ";
+    if(newSize <= 0)
+        throw IllegalParameter("newSize must be > 0");
+    if(newSize == listSize) return;
+    else if(newSize < listSize)
+    {
+        listSize = newSize;
+        return;
+    }
+    else//newSize > listSize
+    {
+        T* newArray = new T[newSize];
+        for(int i = 0; i < listSize; i++)
+            newArray[i] = element[i];
+        arrayLength = newSize;
+        delete []element;
+        element = newArray;
+        listSize = newSize;//这里要保证checkIndex可以通过
+        return;
+    }   
 }
+
+template<class T>
+void arrayList<T>::set(int theIndex, const T& theElement)
+{
+    checkIndex(theIndex);
+    element[theIndex] = theElement;
+    return;
+}
+
+template<class T>
+void arrayList<T>::clear()
+{
+    if(element != nullptr)
+        delete[] element;
+    return;
+}
+
+// int main()
+// {
+//     arrayList<int> x(5);
+//     x.insert(0, 1);
+//     x.insert(1, 2);
+//     x.insert(2, 3);
+//     x.insert(3, 4);
+//     x.insert(4, 5);
+//     arrayList<int>::iterator it;
+//     std::reverse(x.begin(), x.end());
+//     int sum = std::accumulate(x.begin(), x.end(), 0);
+//     std::cout << sum << std::endl;
+//     for(it = x.begin();it != x.end(); it++)
+//         std::cout << *it << " ";
+// }
