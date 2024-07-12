@@ -125,6 +125,15 @@ class matrixSizeMimatch
         string message;
 };
 
+class stackEmpty
+{
+    public:
+        stackEmpty(string theMsg = "stack empty"):message(theMsg){}
+        void outputMessage()const{cout << message << endl;}
+    private:
+        string message;
+};
+
 template<class T>
 void __HeaderList_fluencyTest(const T& theObj)
 {
@@ -134,5 +143,6 @@ void __HeaderList_fluencyTest(const T& theObj)
         std::cout << *(iter--) << " ";
     std::cout << std::endl;
 }
+
 
 #endif // TOOL_H ///:~

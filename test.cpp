@@ -180,13 +180,110 @@
 //     }catch(IllegalParameter ip){ip.outputMessage();}
 // }
 
+// int main()
+// {
+//     int **x;
+//     x = new int*[4];
+//     for(int i = 0; i < 4; i++)
+//         x[i] = new int[3];
+//     for(int i = 0; i < 4; i++)
+//         delete []x[i];
+//     delete []x;
+// }
+
+#include<iostream>
+using namespace std;
+
+// int factorial(int n)
+// {
+//     if(n == 0) return 1;
+//     else return n*factorial(n-1);
+// }
+
+// int main()
+// {
+//     int n = 3;
+//     cout << factorial(n);
+// }
+
+//permutations
+// #include<iterator>
+// template<class T>
+// void permutations(T a[], int k, int m)
+// {
+//     if(k == m)
+//     {
+//         copy(a, a+m+1, ostream_iterator<T>(cout, ""));
+//         cout << endl;
+//     }
+//     else
+//     {
+//         for(int i = k; i <= m; i++)
+//         {
+//             swap(a[k], a[i]);
+//             permutations(a, k+1, m);
+//             swap(a[k], a[i]);
+//         }
+//     }
+// }
+
+
+// #include<iterator>
+// template<class T>
+// void permutations(T a[], int k, int m)
+// {
+//     if(k == m)
+//     {
+//         copy(a, a+m+1, ostream_iterator<T>(cout, ""));
+//         cout << endl;
+//     }
+//     else
+//     {
+//         for(int i = k; i <= m; i++)
+//         {
+//             swap(a[i], a[k]);
+//             permutations(a, k+1, m);
+//             swap(a[i], a[k]);
+//         }
+//     }
+// }
+
+// int main()
+// {
+//     char a[] = {'a', 'b', 'c'};
+//     permutations<char>(a, 0, 2);
+// }
+
+class A
+{
+    public:
+        virtual void show(){cout << "this is a\n";}
+};
+
+class B:public A
+{
+    public:
+        void show(){cout << "this is b\n";}
+};
+
+class C:public B
+{
+    public:
+        void show(){cout << "this is c\n";}
+};
+
+
+void output(A& a)
+{
+    a.show();
+}
+
 int main()
 {
-    int **x;
-    x = new int*[4];
-    for(int i = 0; i < 4; i++)
-        x[i] = new int[3];
-    for(int i = 0; i < 4; i++)
-        delete []x[i];
-    delete []x;
+    A a;
+    B b;
+    C c;
+    output(a);
+    output(b);
+    output(c);
 }
