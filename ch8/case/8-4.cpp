@@ -75,7 +75,7 @@ void arrayStack<T>::pop()
     if(theSize < arrayLength/4)
     {//将容量减少为原来的一半
 
-        T* newStack = new Tqws[arrayLength/2];
+        T* newStack = new T[arrayLength/2];
         copy(stack, stack+theSize, newStack);
         delete[] stack;
         stack = newStack;
@@ -85,13 +85,13 @@ void arrayStack<T>::pop()
 //练习8已证明，若以倍数因子放大数组容量，则n次push操作过后，总的操作用时仍为O(n)
 //假设n-1次pop，则有m=log2n - 1次缩容，缩容共计耗时O(n/2 - 1),即O(n)
 // 主要缩容开销(移动、拷贝数据):2n + n + n/2 + ... + 2
-int main()
-{
-    arrayStack<int> s;
-    for(int i = 0; i < 5; i++)
-        s.push(i);
-    s.showCapacity();
-    for(int i = 0; i < 4; i++)
-        s.pop();
-    s.showCapacity();
-}
+// int main()
+// {
+//     arrayStack<int> s;
+//     for(int i = 0; i < 5; i++)
+//         s.push(i);
+//     s.showCapacity();
+//     for(int i = 0; i < 4; i++)
+//         s.pop();
+//     s.showCapacity();
+// }

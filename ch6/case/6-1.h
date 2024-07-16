@@ -6,7 +6,7 @@ struct chainNode
 {
     chainNode(){}
     chainNode(const T &element = 0){this->element = element;}
-    chainNode(const T &element, chainNode<T>* next){this->element = element; this->next = next;}
+    chainNode(const T &element, chainNode<T>* next = nullptr){this->element = element; this->next = next;}
     //Data
     T element;
     //pointer

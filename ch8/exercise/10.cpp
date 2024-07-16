@@ -53,5 +53,4 @@ int main()
 //评价derivedArrayStack和stackWithArrayList各自的优点
 //二者就代码编写而言均较为简洁
 //当需要将stack视作arrayList类型时，derivedArrayStack有天然的优势。
-//使用继承将父类的实现细节暴露给子类，破坏了封装性；而使用组合不会
 //当arrayList的代码更动时，derivedArrayList的代码有可能需要更动，增加了维护的难度

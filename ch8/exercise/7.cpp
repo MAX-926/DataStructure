@@ -22,7 +22,7 @@ Combine the stacks a and b into a single stack. The elements in the combined sta
 using namespace std;
 
 template<class T>
-class extendedStack;
+class extendedArrayStack;
 
 template<class T>
 class stack
@@ -34,6 +34,16 @@ class stack
         virtual T& top() = 0;
         virtual void pop() = 0;
         virtual void push(const T& theElement) = 0;
+};
+
+template<class T>
+class extendedLinkedStack;
+//abstract class
+template<class T>
+class extendedStack:public stack<T>
+{
+    public:
+        virtual ~extendedStack(){}
         //ADT新增部分
         //i.输入栈
         // virtual istream& operator>>(istream& in, stack<T>& theStack)const = 0;
@@ -41,19 +51,21 @@ class stack
         virtual string transform()const = 0;
         //iii.将一个栈分裂为两个栈。第一个栈包含从栈底开始的一半元素，第二个栈包含剩余元素。
         // virtual void split(stack<T>& theExtendedStack) = 0;
-        virtual void split(extendedStack<T>& theExtendedStack) = 0;//使用不完全类型说明以定义未知类型的引用参数！！！
+        // virtual void split(extendedArrayStack<T>& theExtendedStack) = 0;//使用不完全类型说明以定义未知类型的引用参数！！！
+        virtual void split(extendedArrayStack<T>& theExtendedStack) = 0;//使用不完全类型说明以定义未知类型的引用参数！！！
         //iv.将两个栈合并，把第二个栈的所有元素置于第一个栈的顶部，不改变第二个栈中所有元素的相对顺序
-        virtual void add(extendedStack<T>& theExtendedStack) = 0;
+        // virtual void add(extendedArrayStack<T>& theExtendedStack) = 0;
+        virtual void add(extendedArrayStack<T>& theExtendedStack) = 0;
 };
 
 template<class T>
-class extendedStack:public stack<T>
+class extendedArrayStack:public extendedStack<T>
 {
     public:
         //consturctor, copy-constructor and destructor
-        extendedStack(int initialCapacity = 10);
-        extendedStack(const extendedStack<T>& theExtendedStack);
-        ~extendedStack()
+        extendedArrayStack(int initialCapacity = 10);
+        extendedArrayStack(const extendedArrayStack<T>& theExtendedStack);
+        ~extendedArrayStack()
         {
             if(stack != nullptr)
                 delete[] stack;
@@ -87,8 +99,8 @@ class extendedStack:public stack<T>
         // istream& operator>>(istream& is, extendedStack<T>& theExtendedStack);
         // istream& transform()const;
         string transform()const;
-        void split(extendedStack<T>&);
-        void add(extendedStack<T>& theExtendedStack);
+        void split(extendedArrayStack<T>&);
+        void add(extendedArrayStack<T>& theExtendedStack);
     private:
         T* stack;
         int arrayLength;
@@ -96,7 +108,7 @@ class extendedStack:public stack<T>
 };
 
 template<class T>
-extendedStack<T>::extendedStack(int initialCapacity):stack<T>()
+extendedArrayStack<T>::extendedArrayStack(int initialCapacity):extendedStack<T>()
 {
     if(initialCapacity < 1)
         throw illegalParameter("initialCapacity must be > 0");
@@ -106,7 +118,7 @@ extendedStack<T>::extendedStack(int initialCapacity):stack<T>()
 }
 
 template<class T>
-extendedStack<T>::extendedStack(const extendedStack<T>& theExtendedStack)
+extendedArrayStack<T>::extendedArrayStack(const extendedArrayStack<T>& theExtendedStack)
 {
     arrayLength = theExtendedStack.arrayLength;
     stackTop = theExtendedStack.stackTop;
@@ -126,7 +138,7 @@ extendedStack<T>::extendedStack(const extendedStack<T>& theExtendedStack)
 // }
 
 template<class T>
-string extendedStack<T>::transform()const
+string extendedArrayStack<T>::transform()const
 {
     string str;
     for(int i = 0; i <= stackTop; i++)
@@ -136,7 +148,7 @@ string extendedStack<T>::transform()const
 }
 
 template<class T>
-void extendedStack<T>::split(extendedStack<T>& theExtendedStack)
+void extendedArrayStack<T>::split(extendedArrayStack<T>& theExtendedStack)
 {
     int theSize = size();
     if(theSize == 1)
@@ -160,7 +172,7 @@ void extendedStack<T>::split(extendedStack<T>& theExtendedStack)
 }
 
 template<class T>
-void extendedStack<T>::add(extendedStack<T>& theExtendedStack)
+void extendedArrayStack<T>::add(extendedArrayStack<T>& theExtendedStack)
 {
     if(theExtendedStack.empty())
         return;
@@ -173,36 +185,36 @@ void extendedStack<T>::add(extendedStack<T>& theExtendedStack)
 
 int main()
 {
-    //测试add和split
-    // extendedStack<int> s;
-    // for(int i = 0; i < 5; i++)
-    //     s.push(i);
-    // extendedStack<int> s1(s);
-    // s1.pop();
-    // //s:01234
-    // //s1:0123
-    // s.add(s1);
-    // //s:012340123
-    // //s1:
-    // s.split(s1);
-    // //s:01234
-    // //s1:0123
-    // cout << "s:\n";
-    // for(int i = 0; i < 4; i++)
-    // {
-    //     cout << s.top() << endl;
-    //     s.pop();
-    // }
-    // cout << "s1:\n";
-    // for(int i = 0; i < 4; i++)
-    // {
-    //     cout << s1.top() << endl;
-    //     s1.pop();
-    // }
-
-    //测试transform
-    extendedStack<int> s;
+    // 测试add和split
+    extendedArrayStack<int> s;
     for(int i = 0; i < 5; i++)
         s.push(i);
-    cout << s.transform();
+    extendedArrayStack<int> s1(s);
+    s1.pop();
+    //s:01234
+    //s1:0123
+    s.add(s1);
+    //s:012340123
+    //s1:
+    s.split(s1);
+    //s:01234
+    //s1:0123
+    cout << "s:\n";
+    for(int i = 0; i < 5; i++)
+    {
+        cout << s.top() << endl;
+        s.pop();
+    }
+    cout << "s1:\n";
+    for(int i = 0; i < 5; i++)
+    {
+        cout << s1.top() << endl;
+        s1.pop();
+    }
 }
+//     //测试transform
+//     extendedArrayStack<int> s;
+//     for(int i = 0; i < 5; i++)
+//         s.push(i);
+//     cout << s.transform();
+// }
