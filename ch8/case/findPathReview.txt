@@ -1,0 +1,118 @@
+
+// bool findPath()
+// {//寻找从入口(1, 1)到出口(size, size)的路径，若未找到则返回false
+
+// //初始化偏移量
+//     position here;
+//     here.row = 1;
+//     here.col = 1;
+//     position offset[4];
+//     offset[0].row = 0; offset[0].col = 1;//右
+//     offset[1].row = 1; offset[1].col = 0;//下
+//     offset[2].row = 0; offset[2].col = -1;//左
+//     offset[3].row = -1; offset[3].col = 0;//上
+//     maze[1][1] = 1;
+//     arrayStack<position>* path = new arrayStack<position>;
+//     for(int i = 0; i <= size+1; i++)//初始化迷宫围墙
+//     {
+//         maze[0][i] = maze[size+1][i] = 1;//top, bottom
+//         maze[i][0] = maze[i][size+1] = 1;//left, right
+//     }
+//     int option = 0;
+//     const int lastOption = 3;//有必要固定最后一个选项
+//     //寻找路径
+//     while(here.row != size || here.col != size)//不在终点
+//     {//前进
+//     //寻找前进的方向
+//         int r, c;
+//         while(option <= lastOption)
+//         {
+//             r = here.row + offset[option].row;
+//             c = here.col + offset[option].col;
+//             if(maze[r][c] == 0) break;
+//             option++;
+//         }
+//         if(option <= lastOption)
+//         {//前进，移到maze[r][c]
+//             path->push(here);
+//             here.row = r;
+//             here.col = c;
+//             maze[r][c] = 1;
+//             option = 0;
+//         }
+//         else
+//         {//没有合适的前进位置，回退
+//             if(path->empty()) return false;
+//             position next = path->top();
+//             path->pop();
+//             if(next.row == here.row)//不考虑水平移动
+//                 option = next.col - here.col + 2;//不再考虑向右的水平移动，即option == 1的情况
+//             else
+//                 option = 3 + next.row - here.row;//不再考虑竖直向下的垂直移到，即option
+//             here = next;
+//         }
+//     }
+//     return true;//到达出口
+// }
+
+//findPath是一个集深度优先搜索、回溯、栈的应用
+
+//review
+
+// bool findPath()
+// {//如果找到路径返回true，否则返回false
+//     int **maze;
+//     int size;
+
+//     arrayStack<position>* path = new arrayStack<position>;
+//     position here;
+//     here.row = 1;
+//     here.col = 1;
+//     maze[1][1] = 1;
+
+//     for(int i = 0; i <= size+1; i++)
+//     {
+//         maze[0][i] = maze[size+1][i] = 1;
+//         maze[i][0] = maze[i][size+1] = 1;
+//     }
+//     position offset[4];
+//     //初始化偏移量
+//     offset[0].row = 0; offset[0].col = 1;
+//     offset[1].row = 1; offset[1].col = 0;
+//     offset[2].row = 0; offset[2].col = -1;
+//     offset[3].row = -1; offset[3].col = 0;
+//     int option = 0;
+//     const int lastOption = 3;
+//     //寻找路径
+//     while(here.row != size || here.col != size)
+//     {//寻找下一个相邻位置
+//         int r;
+//         int c;
+//         while(option <= lastOption)
+//         {
+//             r = here.row + offset[option].row;
+//             c = here.col + offset[option].col;
+//             if(maze[r][c] == 0) break;
+//             option++;
+//         }
+//         if(option <= lastOption)
+//         {//找到下一个移动位置
+//             path->push(here);
+//             here.row = r;
+//             here.col = c;
+//             maze[r][c] = 1;
+//             option = 0;
+//         }
+//         else
+//         {//未找到下一个移动位置。回退
+//             if(path->empty()) return false;
+//             position next = path->top();
+//             path->pop();
+//             if(here.row == next.row)
+//                 option = 2 + next.col - here.col;
+//             else option = 3 + next.row - here.row;
+//             here = next;
+//         }
+//     }
+//     return true;
+// }

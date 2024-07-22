@@ -40,6 +40,11 @@ class arrayStack:public stack<T>
         //     stack[stackTop--].~T();
         // }
         void showCapacity(){cout << "Capacity:" << arrayLength << endl;}
+        void showStack()const;
+        //锁定栈内特定元素
+        T& get(int)const;
+        //打印栈状态
+        // void showStack()const;
     private:
         T* stack;
         int stackTop;
@@ -51,9 +56,19 @@ arrayStack<T>::arrayStack(int initialCapacity):stack<T>()
 {
     if(initialCapacity < 1)
         throw illegalParameter("listSize must be > 0");
-    stack = new T[initialCapacity];
+    stack = new T[initialCapacity];//O(1) or O(initialCapacity)
     arrayLength = initialCapacity;
     stackTop = -1;
+}
+
+template<class T>
+void arrayStack<T>::showStack()const
+{
+    cout << "show stack state:\n";
+    for(int i = stackTop; i >= 0; i--)
+        cout << stack[i] << endl;
+    cout << "output complete\n";
+    return;
 }
 
 template<class T>
@@ -68,9 +83,9 @@ arrayStack<T>::arrayStack(const arrayStack<T>& theArrayStack)
 template<class T>
 void arrayStack<T>::pop()
 {
-    if(empty())
+    if(empty())//O(1)
         throw stackEmpty();
-    stack[stackTop--].~T();
+    stack[stackTop--].~T();//O(1)
     int theSize = stackTop + 1;
     if(theSize < arrayLength/4)
     {//将容量减少为原来的一半
@@ -95,3 +110,19 @@ void arrayStack<T>::pop()
 //         s.pop();
 //     s.showCapacity();
 // }
+
+// template<class T>
+// void arrayStack<T>::showStack()const
+// {//自底向上打印数组栈的状态
+//     int index = stackTop;
+//     for(; index >= 0; index--)
+//         cout << stack[index] << endl;
+// }
+
+template<class T>
+T& arrayStack<T>::get(int index)const
+{
+    if(index > stackTop || index < 0)
+        throw illegalParameter("index out of range");
+    return stack[index];
+}

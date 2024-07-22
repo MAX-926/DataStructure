@@ -254,36 +254,67 @@ using namespace std;
 //     permutations<char>(a, 0, 2);
 // }
 
+// class A
+// {
+//     public:
+//         virtual void show(){cout << "this is a\n";}
+// };
+
+// class B:public A
+// {
+//     public:
+//         void show(){cout << "this is b\n";}
+// };
+
+// class C:public B
+// {
+//     public:
+//         void show(){cout << "this is c\n";}
+// };
+
+
+// void output(A& a)
+// {
+//     a.show();
+// }
+
+// int main()
+// {
+//     A a;
+//     B b;
+//     C c;
+//     output(a);
+//     output(b);
+//     output(c);
+// }
+
+//抽象类
 class A
 {
     public:
-        virtual void show(){cout << "this is a\n";}
+        virtual ~A(){}
+        virtual void output() = 0;
 };
+
 
 class B:public A
 {
     public:
-        void show(){cout << "this is b\n";}
+        void output(){cout << "This is B\n";}
+        virtual void Bvir();//欲实例化的类，其虚函数需要被实现。携带虚函数的类会携带一个虚指针，而虚指针会指向一个虚函数表，这个表要在运行前被装载完成，若未实现虚函数，则续表中的对应项无法被创建，进而造成链接错误。
 };
 
-class C:public B
+void func(A* ap)
 {
-    public:
-        void show(){cout << "this is c\n";}
-};
-
-
-void output(A& a)
-{
-    a.show();
+    ap->output();
 }
 
+#include<iostream>
+using namespace std;
+//测试输出不同颜色的数据
 int main()
 {
-    A a;
+    // A a;
     B b;
-    C c;
-    output(a);
-    output(b);
-    output(c);
+    func(&b);
 }

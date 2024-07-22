@@ -5,7 +5,7 @@
 using namespace std;
 
 template<class T>
-void output_2DArray(const T** x, int r, int c)
+void output_2DArray(const T** &x, int r, int c)
 {
     for(int i = 0; i < r; i++)
         for(int j = 0; j < c; j++)
@@ -130,6 +130,15 @@ class stackEmpty
     public:
         stackEmpty(string theMsg = "stack empty"):message(theMsg){}
         void outputMessage()const{cout << message << endl;}
+    private:
+        string message;
+};
+
+class queueEmpty
+{
+    public:
+        queueEmpty(string theMsg = "Queue empty\n"):message(theMsg){}
+        void outputMessage(){cout << message << endl;}
     private:
         string message;
 };
