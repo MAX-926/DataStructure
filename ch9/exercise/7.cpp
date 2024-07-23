@@ -75,7 +75,7 @@ arrayQueueWithQueueSize<T>::arrayQueueWithQueueSize(const arrayQueueWithQueueSiz
         queue[i] = aqwqs.queue[i];
     }
     //复制最后一个元素
-    queue[i] = aqwqs[i];
+    queue[i] = aqwqs.queue[i];
 }
 
 template<class T>
@@ -157,14 +157,21 @@ void arrayQueueWithQueueSize<T>::outputQueue()const
 //     arrayQueueWithQueueSize<int> aqwqs;
 //     for(int i = 0; i < 100; i++)
 //         aqwqs.push(i);
-//     cout << "queueFront: " << aqwqs.getQueueFront() << "\nqueueBack: " << aqwqs.getQueueBack() << endl;
-//     cout << aqwqs.getArrayLength();
+//     // cout << "queueFront: " << aqwqs.getQueueFront() << "\nqueueBack: " << aqwqs.getQueueBack() << endl;
+//     // cout << aqwqs.getArrayLength();
 //     // aqwqs.outputQueue();
-
+//     arrayQueueWithQueueSize<int> aqwqsCpy = aqwqs;
 //     // for(int i = 0; i < 100; i++)
 //     // {
-//     //     cout << aqwqs.front() << " ";
-//     //     aqwqs.pop();
+//     //     cout << aqwqsCpy.front() << " ";
+//     //     aqwqsCpy.pop();
 //     // }
-    
+//     aqwqsCpy.pop();
+//     cout << endl;
+//     for(int i = 0; i < 100; i++)
+//     {
+//         cout << aqwqsCpy.front() << " ";
+//         aqwqsCpy.pop();
+//     }
+
 // }
