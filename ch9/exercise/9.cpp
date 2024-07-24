@@ -31,8 +31,8 @@ class deque
         virtual int size()const = 0;//返回双端队列中元素的个数
         virtual T& front() = 0;//返回队首的元素
         virtual T& back() = 0;//返回队尾的元素
-        virtual void pop_back() = 0;//在队尾删除元素
-        virtual void pop_front() = 0;//在队首删除元素
+        virtual T pop_back() = 0;//在队尾删除元素
+        virtual T pop_front() = 0;//在队首删除元素
         virtual void push_back(const T& theElement) = 0;//在队尾压入元素theElement
         virtual void push_front(const T& theElement) = 0;//在队首压入元素theElement
 };
@@ -48,24 +48,36 @@ class arrayDeque:public deque<T>
 {
     public:
     //constructor, copy-constructor and destructor
-        arrayDeque(int initialCapacity = 10);
-        arrayDeque(const arrayDeque<T>&);
-        ~arrayDeque(){if(deque) delete[] deque;}
+        arrayDeque(int initialCapacity = 10);//O(1) or O(initialCapacity)
+        arrayDeque(const arrayDeque<T>&);//O(ad.size + arrayLength)
+        ~arrayDeque(){if(deque) delete[] deque;}//O(1) cout << "~arrayDeque()\n";
     //ADT methods:
+        //O(1)
         bool empty()const{return queueFront == queueBack;}
+        //O(1)
         int size()const{return (queueBack - queueFront + arrayLength) % arrayLength;}
+        //O(1)
         T& front();
+        //O(1)
         T& back();
-        void pop_front();
-        void pop_back();
+        //O(1)
+        T pop_front();
+        //O(1)
+        T pop_back();
+        //O(1) or O(this.size) or O(arrayLength + this.size)
         void push_front(const T& theElement);
+        //O(1) or O(this.size) or O(arrayLength + this.size)
         void push_back(const T& theElement);
     //test tools:
+        //O(1)
         void outputCapacity()const{cout << "capacity = " << arrayLength << endl;}
+        //O(this.size)
         void outputDequeFrontToBack()const;
+        //O(this.size)
         void outputDequeBackToFront()const;
+        //O(arrayLength)
         void outputDequeArray()const;
-    private:
+    protected:
         T* deque;
         int arrayLength;
         int queueFront;
@@ -73,9 +85,9 @@ class arrayDeque:public deque<T>
 };
 
 template<class T>
-arrayDeque<T>::arrayDeque(int initialCapacity)
+arrayDeque<T>::arrayDeque(int initialCapacity)//O(1) or O(initialCapacity)
 {
-    if(initialCapacity < 1)
+    if(initialCapacity < 1)//O(1)
     {
         ostringstream s;
          s << "initialCapacity = " << initialCapacity << " must be > 0";
@@ -84,18 +96,18 @@ arrayDeque<T>::arrayDeque(int initialCapacity)
     queueFront = 0;
     queueBack = 0;
     arrayLength = initialCapacity;
-    deque = new T[arrayLength];
+    deque = new T[arrayLength];//O(arrayLength) or O(1)，取决于类型T是否有构造函数需要调用
 }
 
 template<class T>
-arrayDeque<T>::arrayDeque(const arrayDeque<T>& ad)
+arrayDeque<T>::arrayDeque(const arrayDeque<T>& ad)//O(ad.size + arrayLength)
 {//复制队列元素
     arrayLength = ad.arrayLength;
     queueFront = ad.queueFront;
     queueBack = ad.queueBack;
-    deque = new T[arrayLength];
+    deque = new T[arrayLength];//O(1) or O(ad.arrayLength)
     int iter = (ad.queueFront+1) % ad.arrayLength;
-    while(iter != ad.queueBack)
+    while(iter != ad.queueBack)//O(ad.size)
     {
         deque[iter] = ad.deque[iter];
         iter = (iter + 1) % arrayLength;
@@ -105,49 +117,53 @@ arrayDeque<T>::arrayDeque(const arrayDeque<T>& ad)
 }
 
 template<class T>
-T& arrayDeque<T>::front()
+T& arrayDeque<T>::front()//O(1)
 {//获取队首元素
-    if(queueFront == queueBack)
+    if(queueFront == queueBack)//O(1)
         throw queueEmpty();
-    return deque[(queueFront + 1) % arrayLength];
+    return deque[(queueFront + 1) % arrayLength];//O(1)
 }
 
 template<class T>
-T& arrayDeque<T>::back()
+T& arrayDeque<T>::back()//O(1)
 {//获取队尾元素
-    if(queueFront == queueBack)
+    if(queueFront == queueBack)//O(1)
         throw queueEmpty();
-    return deque[queueBack];
+    return deque[queueBack];//O(1)
 }
 
 template<class T>
-void arrayDeque<T>::pop_front()
+T arrayDeque<T>::pop_front()//O(1)
 {//删除队首元素
-    if(queueFront == queueBack)
+    if(queueFront == queueBack)//O(1)
         throw queueEmpty();
     queueFront = (queueFront + 1) % arrayLength;
+    T re = deque[queueFront];
     deque[queueFront].~T();
+    return re;
 }
 
 template<class T>
-void arrayDeque<T>::pop_back()
+T arrayDeque<T>::pop_back()//O(1)
 {//删除队尾元素
-    if(queueFront == queueBack)
+    if(queueFront == queueBack)//O(1)
         throw queueEmpty();
+    T re = deque[queueBack];
     deque[queueBack].~T();
     queueBack = (queueBack - 1 + arrayLength) % arrayLength;
+    return re;
 }
 
 template<class T>
-void arrayDeque<T>::push_front(const T& theElement)
+void arrayDeque<T>::push_front(const T& theElement)//O(1) or O(this.size) or O(arrayLength + this.size)
 {//向队首加入元素
-    if((queueBack+1) % arrayLength == queueFront)
+    if((queueBack+1) % arrayLength == queueFront)//O(this.size) or O(arrayLength + this.size)
     {//队列满。需要扩容
-        T* newDeque = new T[arrayLength*2];
+        T* newDeque = new T[arrayLength*2];//O(1) or O(arrayLength)
         //复制元素
         int j = 1;
-        int iter = (queueFront+1) % arrayLength;
-        while(iter != queueBack)
+        int iter = (queueFront + 1) % arrayLength;
+        while(iter != queueBack)//O(this.size)
         {
             newDeque[j++] = deque[iter];
             iter = (iter + 1) % arrayLength;
@@ -158,7 +174,7 @@ void arrayDeque<T>::push_front(const T& theElement)
         queueFront = 0;
         queueBack = j;
         arrayLength *= 2;
-        delete[] deque;
+        delete[] deque;//O(1) or O(this.size)
         deque = newDeque;
     }
     deque[queueFront] = theElement;
@@ -166,9 +182,9 @@ void arrayDeque<T>::push_front(const T& theElement)
 }
 
 template<class T>
-void arrayDeque<T>::push_back(const T& theElement)
+void arrayDeque<T>::push_back(const T& theElement)//O(1) or O(this.size) or O(arrayLength + this.size)
 {//向队尾加入元素
-    if((queueBack+1) % arrayLength == queueFront)
+    if((queueBack+1) % arrayLength == queueFront)////O(this.size) or O(arrayLength + this.size)
     {//队列满。需要扩容
         T* newDeque = new T[arrayLength*2];
         //复制元素
@@ -193,7 +209,7 @@ void arrayDeque<T>::push_back(const T& theElement)
 }
 
 template<class T>
-void arrayDeque<T>::outputDequeFrontToBack()const
+void arrayDeque<T>::outputDequeFrontToBack()const//O(this.size)
 {//从队首打印到队尾
     int iter = (queueFront + 1) % arrayLength;
     while(iter != queueBack)//相等队列为空
@@ -205,7 +221,7 @@ void arrayDeque<T>::outputDequeFrontToBack()const
 }
 
 template<class T>
-void arrayDeque<T>::outputDequeBackToFront()const
+void arrayDeque<T>::outputDequeBackToFront()const//O(this.size)
 {//从队尾到队首打印元素
     int iter = queueBack;
     while(queueBack != queueFront)
@@ -218,7 +234,7 @@ void arrayDeque<T>::outputDequeBackToFront()const
 
 
 template<class T>
-void arrayDeque<T>::outputDequeArray()const
+void arrayDeque<T>::outputDequeArray()const//O(arrayLength)
 {
     for(int i = 0; i < arrayLength; i++)
         cout << deque[i] << " ";
@@ -227,96 +243,96 @@ void arrayDeque<T>::outputDequeArray()const
 
 //3)用适当的测试数据测试代码
 
-int main()
-{
-    arrayDeque<int> ad;//initialCapacity = 10
-    
-    //测试empty()
-    // ad.push_front(26);
-    // ad.push_back(26);
-    // for(int i = 0; i < 10; i++)//触发扩容
-    //     ad.push_front(26);
-    //     // ad.push_back(26);
-    // ad.outputCapacity();
-    // switch(ad.empty())
-    // {
-    //     case true:
-    //         cout << "ad is empty\n";
-    //         break;
-    //     default:
-    //         cout << "ad is not empty\n";
-    // }
+// int main()
+// {
+//     arrayDeque<int> ad;//initialCapacity = 10
 
-    //测试size()
-        //未扩容前
-    // for(int i = 0; i < 9; i++)
-        // ad.push_front(i);
-        // ad.push_back(i);
-        // ad.pop_front();
-        // ad.pop_back();
-        //扩容后
-    // for(int i = 0; i < 10; i++)
-        // ad.push_front(i);
-        // ad.push_back(i);
-        // ad.pop_front();
-        // ad.pop_back();
-    // cout << "ad.size = " << ad.size() << endl;
+//     //测试empty()
+//     // ad.push_front(26);
+//     // ad.push_back(26);
+//     // for(int i = 0; i < 10; i++)//触发扩容
+//     //     ad.push_front(26);
+//     //     // ad.push_back(26);
+//     // ad.outputCapacity();
+//     // switch(ad.empty())
+//     // {
+//     //     case true:
+//     //         cout << "ad is empty\n";
+//     //         break;
+//     //     default:
+//     //         cout << "ad is not empty\n";
+//     // }
 
-    //测试front()
-    // for(int i = 0; i < 5; i++)
-    //     // ad.push_back(i);
-    //     ad.push_front(i);
-    // for(int i = 0; i < 10; i++)//触发扩容，检查front是否为预期值
-    // {
-        // ad.push_front(i);
-        // ad.push_back(i);
-        // cout << ad.front() << " ";
-        // cout << ad.back() << " ";
-    // }
+//     //测试size()
+//         //未扩容前
+//     // for(int i = 0; i < 9; i++)
+//         // ad.push_front(i);
+//         // ad.push_back(i);
+//         // ad.pop_front();
+//         // ad.pop_back();
+//         //扩容后
+//     // for(int i = 0; i < 10; i++)
+//         // ad.push_front(i);
+//         // ad.push_back(i);
+//         // ad.pop_front();
+//         // ad.pop_back();
+//     // cout << "ad.size = " << ad.size() << endl;
 
-    //测试back()
-    // for(int i = 0; i < 5; i++)
-    //     // ad.push_back(i);
-    //     ad.push_front(i);
-    // for(int i = 0; i < 10; i++)//触发扩容，检查front是否为预期值
-    // {
-    //     // ad.push_front(i);
-    //     ad.push_back(i);
-    //     // cout << ad.front() << " ";
-    //     // cout << ad.back() << " ";
-    // }
-    // for(int i = 0; i < 15; i++)
-    // {
-    //     cout << ad.back() << " ";
-    //     ad.pop_back();
-    // }
-    //4 3 2 1 0 0 1 2 3 4 5 6 7 8 9
+//     //测试front()
+//     // for(int i = 0; i < 5; i++)
+//     //     // ad.push_back(i);
+//     //     ad.push_front(i);
+//     // for(int i = 0; i < 10; i++)//触发扩容，检查front是否为预期值
+//     // {
+//         // ad.push_front(i);
+//         // ad.push_back(i);
+//         // cout << ad.front() << " ";
+//         // cout << ad.back() << " ";
+//     // }
 
-    // 测试pop_back()/push_back()
-    // for(int i = 0; i < 20; i++)
-    //     ad.push_back(i);
-    // ad.outputDequeArray();
-    // ad.outputCapacity();
-    // for(int i = 0; i < 20; i++)
-    // {
-    //     cout << ad.back() << " ";
-    //     ad.pop_back();
-    // }
-    // cout << ad.size()
+//     //测试back()
+//     // for(int i = 0; i < 5; i++)
+//     //     // ad.push_back(i);
+//     //     ad.push_front(i);
+//     // for(int i = 0; i < 10; i++)//触发扩容，检查front是否为预期值
+//     // {
+//     //     // ad.push_front(i);
+//     //     ad.push_back(i);
+//     //     // cout << ad.front() << " ";
+//     //     // cout << ad.back() << " ";
+//     // }
+//     // for(int i = 0; i < 15; i++)
+//     // {
+//     //     cout << ad.back() << " ";
+//     //     ad.pop_back();
+//     // }
+//     //4 3 2 1 0 0 1 2 3 4 5 6 7 8 9
 
-    //测试pop_front()/push_front()
-    // for(int i = 0; i < 20; i++)
-    //     ad.push_front(i);
-    // ad.outputDequeArray();
-    // ad.outputCapacity();
-    // for(int i = 0; i < 20; i++)
-    //     ad.push_back(i);
-    // ad.outputDequeArray();
-    // ad.outputCapacity();
-    // for(int i = 0; i < 40; i++)
-    // {
-    //     cout << ad.front() << " ";
-    //     ad.pop_front();
-    // }
+//     // 测试pop_back()/push_back()
+//     // for(int i = 0; i < 20; i++)
+//     //     ad.push_back(i);
+//     // ad.outputDequeArray();
+//     // ad.outputCapacity();
+//     // for(int i = 0; i < 20; i++)
+//     // {
+//     //     cout << ad.back() << " ";
+//     //     ad.pop_back();
+//     // }
+//     // cout << ad.size()
 
-}
+//     //测试pop_front()/push_front()
+//     // for(int i = 0; i < 20; i++)
+//     //     ad.push_front(i);
+//     // ad.outputDequeArray();
+//     // ad.outputCapacity();
+//     // for(int i = 0; i < 20; i++)
+//     //     ad.push_back(i);
+//     // ad.outputDequeArray();
+//     // ad.outputCapacity();
+//     // for(int i = 0; i < 40; i++)
+//     // {
+//     //     cout << ad.front() << " ";
+//     //     ad.pop_front();
+//     // }
+
+// }
