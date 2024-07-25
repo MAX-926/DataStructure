@@ -1,19 +1,21 @@
 #include"9-1.h"
+#include"../../ch6/case/6-1.h"
 #include"../../Tool.h"
-template<class T>
-struct chainNode
-{//单向链表的节点
-    //constructor
-    chainNode(const T& data, chainNode<T>* next = nullptr)//O(1)
-    {
-        this->data = data;
-        this->next = next;
-    }
-    //data field
-    T data;
-    //pointer field
-    chainNode<T>* next;
-};
+
+// template<class T>
+// struct chainNode
+// {//单向链表的节点
+//     //constructor
+//     chainNode(const T& element, chainNode<T>* next = nullptr)//O(1)
+//     {
+//         this->element = element;
+//         this->next = next;
+//     }
+//     //element field
+//     T element;
+//     //pointer field
+//     chainNode<T>* next;
+// };
 
 template<class T>
 class linkedQueue:public queue<T>
@@ -30,6 +32,9 @@ class linkedQueue:public queue<T>
         T& back();//O(1)
         void push(const T&);//O(1)
         void pop();//O(1)
+        void clear();//O(elementsNum)
+        //15:popNode():将队列中的chainNode删除并返回
+        chainNode<T>& popNode();
     protected:
         chainNode<T>* queueFront;
         chainNode<T>* queueBack;
@@ -58,12 +63,12 @@ linkedQueue<T>::linkedQueue(const linkedQueue<T>& lq)
     {
         queueSize = lq.queueSize;
         chainNode<T>* sourceIter = lq.queueFront;
-        queueFront = new chainNode<T>(sourceIter->data);
+        queueFront = new chainNode<T>(sourceIter->element);
         chainNode<T>* iter = queueFront;
         sourceIter = sourceIter->next;
         while(sourceIter != nullptr)
         {
-            iter->next = new chainNode<T>(sourceIter->data);
+            iter->next = new chainNode<T>(sourceIter->element);
             iter = iter->next;
             sourceIter = sourceIter->next;
         }
@@ -76,7 +81,7 @@ linkedQueue<T>::~linkedQueue()
     while(queueFront != nullptr)//O(elementsNum)
     {
         chainNode<T>* nextNode = queueFront->next;
-        // cout << "call destructor for elements " << queueFront->data << endl;
+        // cout << "call destructor for elements " << queueFront->element << endl;
         delete queueFront;
         queueFront = nextNode;
     }
@@ -87,7 +92,7 @@ T& linkedQueue<T>::front()
 {
     if(queueFront == nullptr)//O(1)
         throw queueEmpty();
-    return queueFront->data;//O(1)
+    return queueFront->element;//O(1)
 }
 
 template<class T>
@@ -95,7 +100,7 @@ T& linkedQueue<T>::back()
 {
     if(queueSize == 0)//O(1)
         throw queueEmpty();
-    return queueBack->data;//O(1)
+    return queueBack->element;//O(1)
 }
 
 template<class T>
@@ -135,6 +140,33 @@ void linkedQueue<T>::pop()
     delete queueFront;
     queueFront = nextNode;
     queueSize--;
+}
+
+template<class T>
+void linkedQueue<T>::clear()
+{
+    if(queueSize != 0)
+    {
+        while(queueFront != nullptr)
+        {
+            chainNode<T>* nextNode = queueFront->next;
+            delete queueFront;
+            queueFront = nextNode;
+        }
+        queueBack = nullptr;
+        queueSize = 0;
+    }
+}
+
+template<class T>
+chainNode<T>& linkedQueue<T>::popNode()
+{
+    if(queueFront == nullptr)
+        throw queueEmpty();
+    chainNode<T>* targetNode = queueFront;
+    queueFront = queueFront->next;
+    queueSize--;
+    return *targetNode;
 }
 
 // int main()
