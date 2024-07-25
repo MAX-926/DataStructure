@@ -1,5 +1,5 @@
 //railRoadWithNoQueue
-//使用其它变量代替队列，获得与使用队列一样的重排结果
+//使用其它变量代替队列，获得与使用队列一样的重排结果:使用lastCar[]与whichTrack[]代替queue实现重排
 #include<iostream>
 #include<string.h>
 using namespace std;
