@@ -1,7 +1,5 @@
-#include<iostream>
+//构建单向循环链表实现deque
 #include"../../Tool.h"
-
-using namespace std;
 
 template<class T>
 struct chainNode
@@ -34,16 +32,16 @@ class deque
 };
 
 template<class T>
-class linkedDeque:public deque<T>
+class circularDeque:public deque<T>
 {
     public:
         //constructor, copy-constructor and destructor
         //O(1)
-        linkedDeque():deque<T>(), dequeFront(nullptr), dequeBack(nullptr), dequeSize(0){}
+        circularDeque():deque<T>(), dequeFront(nullptr), dequeBack(nullptr), dequeSize(0){}
         //O(1) or O(dequeSize)
-        linkedDeque(const linkedDeque<T>&);
+        circularDeque(const circularDeque<T>&);
         //O(1) or O(dequeSize)
-        ~linkedDeque();
+        ~circularDeque();
         //ADT methods:
         //O(1)
         bool empty()const{return dequeFront == nullptr;}
@@ -61,6 +59,8 @@ class linkedDeque:public deque<T>
         void push_back(const T&);
         //O(1)
         void push_front(const T&);
+        //test tools:
+        void circularPrintDeque(int times = 2)const;//默认打印2次，显示双端队列为循环队列
     protected:
         chainNode<T>* dequeFront;
         chainNode<T>* dequeBack;
@@ -68,42 +68,47 @@ class linkedDeque:public deque<T>
 };
 
 template<class T>
-linkedDeque<T>::linkedDeque(const linkedDeque<T>& ld)//O(1) or O(dequeSize)
+circularDeque<T>::circularDeque(const circularDeque<T>& ld)//O(1) or O(dequeSize)
 {//拷贝构造函数
     dequeSize = ld.dequeSize;
     chainNode<T>* iter = ld.dequeFront;
-    if(iter == nullptr)//O(1)
+    unsigned int count = 0;
+    if(dequeSize == 0)//O(1)
     {
         dequeFront = nullptr;
         dequeBack = nullptr;
         return;
     }
     //复制第一个节点
-    dequeFront = new chainNode<T>(iter->data);
+    dequeFront = new chainNode<T>(iter->data);//将尾节点指向首节点
     iter = iter->next;
+    count++;
     chainNode<T>* iterMy = dequeFront;
-    while(iter != nullptr)//O(dequeSize)
+    while(count != dequeSize)//O(dequeSize)
     {
         iterMy->next = new chainNode<T>(iter->data);
         iterMy = iterMy->next;
         iter = iter->next;
+        count++;
     }
-    dequeBack = iterMy;
+    iterMy->next = new chainNode<T>(iter->data, dequeFront);
+    dequeBack = iterMy->next;
 }
 
 template<class T>
-linkedDeque<T>::~linkedDeque()//O(1) or O(dequeSize)
+circularDeque<T>::~circularDeque()//O(1) or O(dequeSize)
 {
-    while(dequeFront != nullptr)//O(1) or O(dequeSize)
+    while(dequeSize != 0)//O(1) or O(dequeSize)
     {
         chainNode<T>* nextNode = dequeFront->next;
         delete dequeFront;
         dequeFront = nextNode;
+        dequeSize--;
     }
 }
 
 template<class T>
-T& linkedDeque<T>::front()//O(1)
+T& circularDeque<T>::front()//O(1)
 {
     if(dequeFront == nullptr)//O(1)
         throw queueEmpty();
@@ -111,7 +116,7 @@ T& linkedDeque<T>::front()//O(1)
 }
 
 template<class T>
-T& linkedDeque<T>::back()//O(1)
+T& circularDeque<T>::back()//O(1)
 {
     if(dequeFront == nullptr)//O(1)
         throw queueEmpty();
@@ -119,7 +124,7 @@ T& linkedDeque<T>::back()//O(1)
 }
 
 template<class T>
-T linkedDeque<T>::pop_back()//O(1) or [O(1) or O(dequeSize)]
+T circularDeque<T>::pop_back()//O(1) or [O(1) or O(dequeSize)]
 {//从队尾删除元素
     if(dequeFront == nullptr)//O(1)
         throw queueEmpty();
@@ -140,18 +145,18 @@ T linkedDeque<T>::pop_back()//O(1) or [O(1) or O(dequeSize)]
     delete dequeBack;
     dequeSize--;
     dequeBack = iter;
-    dequeBack->next = nullptr;
+    dequeBack->next = dequeFront;
     return targetElement;
 }
 
 template<class T>
-T linkedDeque<T>::pop_front()//O(1)
+T circularDeque<T>::pop_front()//O(1)
 {//从队列头删除
     if(dequeFront == nullptr)//O(1)
         throw queueEmpty();
     T targetElement;
     chainNode<T>* nextNode = dequeFront->next;
-    if(nextNode == nullptr)//O(1)
+    if(nextNode == dequeFront)//O(1)
     {
         targetElement = dequeFront->data;
         delete dequeFront;
@@ -164,50 +169,78 @@ T linkedDeque<T>::pop_front()//O(1)
     delete dequeFront;
     dequeFront = nextNode;
     dequeSize--;
+    dequeBack->next = dequeFront;//更新尾节点对新首节点的连接
     return targetElement;
 }
 
 template<class T>
-void linkedDeque<T>::push_back(const T& theElement)//O(1)
+void circularDeque<T>::push_back(const T& theElement)//O(1)
 {//将元素压入队尾
     chainNode<T>* newNode = new chainNode<T>(theElement);
     if(dequeFront == nullptr)//O(1)
     {
         dequeFront = newNode;
         dequeBack = dequeFront;
+        dequeBack->next = dequeFront;//更新尾节点到首节点的连接
         dequeSize++;
         return;
     }
     dequeBack->next  = newNode;
     dequeSize++;
     dequeBack = newNode;
+    dequeBack->next = dequeFront;//更新尾节点到首节点的连接
     return;
 }
 
 template<class T>
-void linkedDeque<T>::push_front(const T& theElement)//O(1)
+void circularDeque<T>::push_front(const T& theElement)//O(1)
 {
     chainNode<T>* newNode = new chainNode<T>(theElement);
     if(dequeFront == nullptr)//O(1)
     {
         dequeFront = newNode;
         dequeBack = dequeFront;
+        dequeBack->next = dequeFront;//更新尾节点到首节点的连接
         dequeSize++;
         return;
     }
     newNode->next = dequeFront;
     dequeFront = newNode;
+    dequeBack->next = dequeFront;//更新尾节点到新首节点的连接
     dequeSize++;
     return;
 }
 
+template<class T>
+void circularDeque<T>::circularPrintDeque(int times)const
+{//循环打印dequetimes次，从front到back为一个周期
+    int loopTimes = times*dequeSize;
+    chainNode<T>* iter = dequeFront;
+    if(dequeFront == nullptr)
+        throw queueEmpty();
+    for(int i = 0; i < loopTimes; i++)
+    {
+        cout << iter->data << " ";
+        iter = iter->next;
+    }
+    cout << "\noutput complete\n";
+}
+
+// int main()
+// {
+//     circularDeque<int> cd;
+//     for(int i = 0; i < 10; i++)
+//         cd.push_back(i);
+//     cd.circularPrintDeque(2);
+// }
+
 // int main()
 // {//测试单链deque
-//     linkedDeque<int> ld;
+//     circularDeque<int> ld;
 //     for(int i = 0; i < 10; i++)
 //         // ld.push_front(i);
 //         ld.push_back(i);
-//     linkedDeque<int> cpy(ld);
+//     circularDeque<int> cpy(ld);
 //     cout << "ld.empty = " << ld.empty() << endl;
 //     cout << "ld.size = " << ld.size() << endl;
 //     cout << "cpy.size = " << cpy.size() << endl;
@@ -217,7 +250,7 @@ void linkedDeque<T>::push_front(const T& theElement)//O(1)
 //         // cout << ld.pop_back() << " ";
 //         // cout << ld.front() << " ";
 //         // cout << ld.pop_front() << " ";
-//         cout << cpy.pop_front() << " ";
+//         // cout << cpy.pop_front() << " ";
 //         // cout << cpy.pop_back() << " ";
 //     }
 //     cout << "ld.empty = " << ld.empty() << endl;
@@ -228,30 +261,28 @@ void linkedDeque<T>::push_front(const T& theElement)//O(1)
 
 // int main()
 // {
-//     linkedDeque<int> cd;
+//     circularDeque<int> cd;
 //     cout << "cd.empty = " << cd.empty() << endl;
 //     cout << "cd.size = " << cd.size() << endl;
-//     linkedDeque<int> cpy(cd);
+//     circularDeque<int> cpy(cd);
 //     cout << "cd.empty = " << cd.empty() << endl;
 //     cout << "cd.size = " << cd.size() << endl;
 //     for(int i = 0; i < 5; i++)
 //     {
 //         // cd.push_back(i);
-//         // cd.push_front(i);
+//         cd.push_front(i);
 //         // cpy.push_back(i+5);
-//         // cpy.push_front(i+5);
+//         cpy.push_front(i+5);
 //     }
 //     for(int i = 0; i < 5; i++)
 //     {
-//         // cout << cd.pop_front() << " ";
-//         // cout << cd.pop_back() << " ";
+//         cout << cd.pop_front() << " ";
 //         // cout << cpy.pop_front() << " ";
-//         // cout << cpy.pop_back() << " ";
 //         // cd.pop_back();
 //         // cpy.pop_back();
 //     }
-//     // cd.push_back(26);
-//     // cd.circularPrintDeque(2);
-//     // cpy.push_back(26);
-//     // cpy.circularPrintDeque(2);
+//     cd.push_back(26);
+//     cd.circularPrintDeque(2);
+//     cpy.push_back(26);
+//     cpy.circularPrintDeque(2);
 // }
