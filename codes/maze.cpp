@@ -99,7 +99,7 @@ void outputPath()
    }
 }
 
-void main()
+int main()
 {
    welcome();
    inputMaze();

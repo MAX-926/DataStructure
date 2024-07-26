@@ -5,7 +5,7 @@
 using namespace std;
 
 template<class T>
-void output_2DArray(const T** &x, int r, int c)
+void output_2DArray(T** &x, int r, int c)
 {
     for(int i = 0; i < r; i++)
         for(int j = 0; j < c; j++)
