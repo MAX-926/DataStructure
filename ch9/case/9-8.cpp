@@ -40,9 +40,11 @@ int pathLength;
 //存放路径
 position* path;
 
-bool findPath()
+//O(标记距离 + 重构路径) = O(m^2 + pathLength),m为迷宫尺寸
+//我的计算：O(size^2 + size + pathLength)
+bool findPath()//O(1) or 
 {//如果找到路径则返回true，否则返回false
-    if(start.row == finish.row && start.col == finish.col)
+    if(start.row == finish.row && start.col == finish.col)//O(1)
     {
         pathLength = 0;
         return true;
@@ -51,7 +53,7 @@ bool findPath()
     //1：标记距离
 
     // 初始化外墙
-    for(int i = 0; i <= size+1; i++)
+    for(int i = 0; i <= size+1; i++)//O(size)
     {
         grid[0][i] = 1; grid[size+1][i] = 1;
         grid[i][0] = 1; grid[i][size + 1] = 1;
@@ -61,7 +63,7 @@ bool findPath()
     here = start;
     int numOfNbrs = 4;//有四个相邻的可达点
     //a queue to store point that haven't be tagged
-    arrayQueue<position> q;
+    arrayQueue<position> q;//O(initialCapacity)
     position offset[4];
     //初始化偏移量
     offset[0].row = 0; offset[0].col = 1;//右
@@ -72,38 +74,39 @@ bool findPath()
     grid[start.row][start.col] = 2;
 
     position nbr;
-    do
+    do//O(size^2)
     {//持续标记，直到找到出口或无路可走
-        for(int i = 0; i < numOfNbrs; i++)
+        for(int i = 0; i < numOfNbrs; i++)//O(numOfNbrs),numOfNbrs是一个大小为4的常数
         {//标记可达点
             nbr.row = here.row + offset[i].row;
             nbr.col = here.col + offset[i].col;
             if(grid[nbr.row][nbr.col] == 0)
             {
-                grid[nbr.row][nbr.col] = grid[here.row][here.col] + 1;
+                grid[nbr.row][nbr.col] = grid[here.row][here.col] + 1;//标记格子
                 if(finish.row == nbr.row && finish.col == nbr.col)
                     break;
                 q.push(nbr);
             }
         }
-        output_2DArray<int>(grid, 9, 9);
+        // output_2DArray<int>(grid, 9, 9);
         if(finish.row == nbr.row && finish.col == nbr.col)
             break;
         if(q.empty()) return false;//没有相邻可达点，且未达到终点，失败
         here = q.front();
         q.pop();
-        cout << "output current matrix:\n";
-        cout << endl;
+        // cout << "output current matrix:\n";
+        // cout << endl;
     }while(true);
-    //找到路径，重构路径
+    //找到路径，重构路径:复杂度O(pathlength)
     //存放路径信息
     pathLength = grid[finish.row][finish.col] - 2;//路径长度（不包括start）
     // position path[pathLength];
-    path = new position[pathLength];
+    path = new position[pathLength];//O(pathLength)
     here = finish;
-    for(int i = pathLength - 1; i >= 0; i-- )
+    for(int i = pathLength - 1; i >= 0; i-- )//O(pathLength*numOfNbrs)
     {
         path[i] = here;
+        //O(numOfNbrs)
         for(int j = 0; j < numOfNbrs; j++)//第一次出错是因为重复定义了循环变量i,第二次出错是没有看清楚变量的名称
         {
             nbr.row = here.row + offset[j].row;
