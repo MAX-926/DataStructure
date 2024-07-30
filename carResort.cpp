@@ -114,6 +114,8 @@ Move car 7 from holding track to output track
 Move car 8 from holding track to output track
 Move car 9 from holding track to output track
 
+
+carResort without stack
 Move car 5 from input track to holding track 1
 Move car 8 from input track to holding track 2
 Move car 1 from input track to output track
@@ -130,4 +132,19 @@ Move car 7 from holding track to output track
 Move car 8 from holding track to output track
 Move car 9 from holding track to output track
 
+Move car 5 from input track to holding track 1
+Move car 8 from input track to holding track 2
+Move car 1 from input track to output track
+Move car 7 from input track to holding track 2
+Move car 4 from input track to holding track 1
+Move car 2 from input track to output track
+Move car 9 from input track to holding track 3
+Move car 6 from input track to holding track 2
+Move car 3 from input track to output track
+Move car 4 from holding track to output track
+Move car 5 from holding track to output track
+Move car 6 from holding track to output track
+Move car 7 from holding track to output track
+Move car 8 from holding track to output track
+Move car 9 from holding track to output track
 */

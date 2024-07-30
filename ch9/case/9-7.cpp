@@ -102,19 +102,19 @@ bool putInHoldingTrack(int c)
     return true;
 }
 
-// int main()
-// {
-//     int inputOrder[] = {0, 3, 6, 9, 2, 4, 7, 1, 8, 5};
-//     int len = sizeof(inputOrder)/sizeof(inputOrder[0]);
-//     if(!railRoad(inputOrder, len-1, 4))
-//         cout << "there is no enough holding track to solve railRoad problem\n";
-//     else
-//         for(int i = 0; i < len-1; i++)
-//         {
-//             cout << outputTrack.front() << " ";
-//             outputTrack.pop();
-//         }
-// }
+int main()
+{
+    int inputOrder[] = {0, 3, 1, 7, 6, 2, 8, 5, 4};
+    int len = sizeof(inputOrder)/sizeof(inputOrder[0]);
+    if(!railRoad(inputOrder, len-1, 2))
+        cout << "there is no enough holding track to solve railRoad problem\n";
+    else
+        for(int i = 0; i < len-1; i++)
+        {
+            cout << outputTrack.front() << " ";
+            outputTrack.pop();
+        }
+}
 
 /*
 Move car 3 from input track to holding track 1

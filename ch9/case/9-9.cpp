@@ -1,5 +1,6 @@
 //图元识别
 #include"9-2.cpp"
+#include"../../ch8/case/8-4.cpp"
 
 struct position
 {
@@ -10,63 +11,116 @@ struct position
 
 int size = 7;//二值图片的尺寸
 int** pixel;//二值图片
-position offset[4];
-int numTag = 2;//最小的图元编号
-arrayQueue<position> q;//用队列来处理随程序进行下去衍生的新待处理对象：要处理的一个个排好队！！
+// position offset[4];
+// // int numTag = 2;//最小的图元编号
+// arrayQueue<position> q;//用队列来处理随程序进行下去衍生的新待处理对象：要处理的一个个排好队！！
 
-void classify(int, int);
+// void classify(int, int);
 
-void labelComponents()
-{//找出二值图片中的所有图元并进行分类
-    //为二值图像添加边框
-    for(int i = 0; i < size + 1; i++)
+// void labelComponents()
+// {//找出二值图片中的所有图元并进行分类
+//     //为二值图像添加边框
+//     for(int i = 0; i < size + 1; i++)
+//     {
+//         pixel[0][i] = pixel[size+1][i] = 0;
+//         pixel[i][0] = pixel[i][size+1] = 0;
+//     }
+//     //设置偏移量表
+//     offset[0].row = 0; offset[0].col = 1;
+//     offset[1].row = 1; offset[1].col = 0;
+//     offset[2].row = 0; offset[2].col = -1;
+//     offset[3].row = -1; offset[3].col = 0;
+
+//     //扫描图片，为图元分类
+//     for(int i = 1; i <= size; i++)
+//         for(int j = 1; j <= size; j++)
+//         {
+//             if(pixel[i][j] == 1)
+//             {//分类
+//                 classify(i, j);
+//                 numTag = numTag+1;
+//             }
+//         }
+// }
+
+// void classify(int r, int c)
+// {//将与pos相邻的节点标记为numTag
+//     pixel[r][c] = numTag;
+//     position here(r, c);
+//     position nbr;
+//     int numOfNbrs = 4;
+//     do
+//     {
+//         for(int i = 0; i < numOfNbrs; i++)
+//         {
+//             nbr.row = here.row + offset[i].row;
+//             nbr.col = here.col + offset[i].col;
+//             if(pixel[nbr.row][nbr.col] == 1)
+//             {
+//                 pixel[nbr.row][nbr.col] = numTag;
+//                 q.push(nbr);//之后需要检查nbr是否还有相邻的图元
+//             }
+//         }
+//         if(q.empty()) return;
+//         else
+//         {
+//             here = q.front();
+//             q.pop();
+//         }
+//     }while(true);
+// }
+
+void labelComponentsS()
+{//标价二值图像中的图元
+//遍历二值图像的像素点，寻找种子，利用种子在像素点矩阵中移动，寻找关联的像素点
+    //构建画框
+    for(int i = 0; i <= size + 1; i++ )
     {
-        pixel[0][i] = pixel[size+1][i] = 0;
-        pixel[i][0] = pixel[i][size+1] = 0;
+        pixel[0][i] = pixel[size + 1][i] = 0;
+        pixel[i][0] = pixel[i][size + 1] = 0;
     }
-    //设置偏移量表
+    //初始化偏移量表
+    position offset[4];
     offset[0].row = 0; offset[0].col = 1;
     offset[1].row = 1; offset[1].col = 0;
     offset[2].row = 0; offset[2].col = -1;
     offset[3].row = -1; offset[3].col = 0;
 
-    //扫描图片，为图元分类
+    position here, nbr;
+    int numOfNbrs = 4;
+    int numTag = 1;
+    // arrayQueue<position> q;
+    arrayStack<position> s;
     for(int i = 1; i <= size; i++)
         for(int j = 1; j <= size; j++)
         {
             if(pixel[i][j] == 1)
-            {//分类
-                classify(i, j);
-                numTag = numTag+1;
+            {//代表找到一个新图元
+                pixel[i][j] = ++numTag;
+                here.row = i;
+                here.col = j;
+                while(true)
+                {//寻找剩余图元
+                    for(int i = 0; i < numOfNbrs; i++)
+                    {
+                        nbr.row = here.row + offset[i].row;
+                        nbr.col = here.col + offset[i].col;
+                        if(pixel[nbr.row][nbr.col] == 1)
+                        {
+                            pixel[nbr.row][nbr.col] = numTag;
+                            // q.push(nbr);
+                            s.push(nbr);
+                        }
+                    }
+                    // if(q.empty()) break;//该种子图元下，没有其它相邻图元了
+                    if(s.empty()) break;//该种子图元下，没有其它相邻图元了
+                    // here = q.front()
+                    here = s.top();
+                    // q.pop();
+                    s.pop();
+                }
             }
         }
-}
-
-void classify(int r, int c)
-{//将与pos相邻的节点标记为numTag
-    pixel[r][c] = numTag;
-    position here(r, c);
-    position nbr;
-    int numOfNbrs = 4;
-    do
-    {
-        for(int i = 0; i < numOfNbrs; i++)
-        {
-            nbr.row = here.row + offset[i].row;
-            nbr.col = here.col + offset[i].col;
-            if(pixel[nbr.row][nbr.col] == 1)
-            {
-                pixel[nbr.row][nbr.col] = numTag;
-                q.push(nbr);//之后需要检查nbr是否还有相邻的图元
-            }
-        }
-        if(q.empty()) return;
-        else
-        {
-            here = q.front();
-            q.pop();
-        }
-    }while(true);
 }
 
 int main()
@@ -101,6 +155,7 @@ int main()
     pixel[7][6] = 1;
     pixel[7][7] = 1;
 
-    labelComponents();
+    // labelComponents();
+    labelComponentsS();
     output_2DArray<int>(pixel, size + 2, size + 2);
 }
