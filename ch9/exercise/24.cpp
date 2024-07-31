@@ -172,22 +172,23 @@ bool railRoad(int inputOrder[], int theNumOfCars, int theNumOfTracks)
 
 int main()
 {
-    // int car[] = {0, 3, 6, 9, 2, 4, 7, 1, 8, 5};
-    // int len = sizeof(car) / sizeof(car[0]);
-    // if(!railRoad(car, len-1, 3))
-    //     cout << "There is no enough holding track to solve railRoad problem\n";
-    int cars[] = {0, 5, 8, 1, 7, 4, 2, 9, 6, 3};
-    int len = sizeof(cars)/sizeof(cars[0])-1;
-    railRoad(cars, len, 3);
+    int car[] = {0, 3, 6, 9, 2, 4, 7, 1, 8, 5};
+    int len = sizeof(car) / sizeof(car[0]);
+    if(!railRoad(car, len-1, 3))
+        cout << "There is no enough holding track to solve railRoad problem\n";
+    // int cars[] = {0, 5, 8, 1, 7, 4, 2, 9, 6, 3};
+    // int len = sizeof(cars)/sizeof(cars[0])-1;
+    // railRoad(cars, len, 3);
 }
 
 /*
+
 Move car 3 from input track to holding track 1
-Move car 6 from input track to holding track 1
-Move car 9 from input track to holding track 1
+Move car 6 from input track to holding track 2
+Move car 9 from input track to holding track 3
 Move car 2 from input track to holding track 1
-Move car 4 from input track to holding track 1
-Move car 7 from input track to holding track 1
+Move car 4 from input track to holding track 2
+Move car 7 from input track to holding track 3
 Move car 1 from input track to output track
 Move car 2 from holding track to output track
 Move car 3 from holding track to output track
@@ -198,4 +199,21 @@ Move car 6 from holding track to output track
 Move car 7 from holding track to output track
 Move car 8 from holding track to output track
 Move car 9 from holding track to output track
+
+Move car 3 from input track to holding track 1
+Move car 6 from input track to holding track 1
+Move car 9 from input track to holding track 1
+Move car 2 from input track to holding track 2
+Move car 4 from input track to holding track 2
+Move car 7 from input track to holding track 2
+Move car 1 from input track to output track
+Move car 2 from holding track 2 to output track
+Move car 3 from holding track 1 to output track
+Move car 4 from holding track 2 to output track
+Move car 8 from input track to holding track 2
+Move car 5 from input track to output track
+Move car 6 from holding track 1 to output track
+Move car 7 from holding track 2 to output track
+Move car 8 from holding track 2 to output track
+Move car 9 from holding track 1 to output track
 */
