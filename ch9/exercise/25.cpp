@@ -142,7 +142,7 @@ bool findPath()
 
 //     //     }
 //     // output_2DArray<int>(maze, 9, 9);
-//     leePath();
+//     findPath();
 
 //     for(int i = 0; i < pathLength; i++)
 //     {

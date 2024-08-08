@@ -1,0 +1,11 @@
+抽象数据类型 Dictionary
+{
+    实例：
+        关键字名不相同的一组键值
+    操作：
+        bool empty()const;//返回true，当且仅当字典为空（判断一个跳表是否为空）
+        int size()const;//返回字典的数对个数（返回一个跳表的元素个数）
+        T& find(key)const;//返回关键字为k的数对（返回跳表键值key对应的元素value）
+        void insert(p);//输入数对p（向跳表插入一个键值对p = （key， value））
+        void erase(key);//删除关键字为k的数对（把键值对（key， value）从跳表中删除）
+}

@@ -143,6 +143,15 @@ class queueEmpty
         string message;
 };
 
+class hashTableFull
+{
+    public:
+        hashTableFull(string theMsg = "Hash table is full\n"):message(theMsg){}
+        void output()const{cout << message << endl;}
+    private:
+        string message;
+};
+
 template<class T>
 void __HeaderList_fluencyTest(const T& theObj)
 {
