@@ -81,3 +81,106 @@ ostream& operator<<(ostream& out, const hashChainsWithTailNode<K, E>& hcwtn)
 }
 
 #endif //HASHCHAINSWITHTAILNODE
+
+/*
+
+he chain is 
+NULL
+
+1 : 5
+12 : 60
+
+2 : 10
+24 : 160
+35 : 230
+NULL
+
+15 : 69
+NULL
+
+6 : 30
+
+40 : 80
+
+8 : 40
+19 : 65
+NULL
+
+10 : 50
+
+Its size is 11
+Element associated with 1 is 5
+Element associated with 6 is 30
+Element associated with 12 is 60
+Deleted 1, 2, 6, 12
+The chain is
+NULL
+NULL
+
+24 : 160
+35 : 230
+NULL
+
+15 : 69
+NULL
+NULL
+
+40 : 80
+
+8 : 40
+19 : 65
+NULL
+
+10 : 50
+
+Its size is 7
+
+The chain is 
+this bucket is null
+below is chain:
+1 : 5
+12 : 60
+below is chain:
+2 : 10
+24 : 160
+35 : 230
+this bucket is null
+below is chain:
+15 : 69
+this bucket is null
+below is chain:
+6 : 30
+below is chain:
+40 : 80
+below is chain:
+8 : 40
+19 : 65
+this bucket is null
+below is chain:
+10 : 50
+Its size is 11
+Element associated with 1 is 5
+Element associated with 6 is 30
+Element associated with 12 is 60
+Deleted 1, 2, 6, 12
+The chain is
+this bucket is null
+this bucket is null
+below is chain:
+24 : 160
+35 : 230
+this bucket is null
+below is chain:
+15 : 69
+this bucket is null
+this bucket is null
+below is chain:
+40 : 80
+below is chain:
+8 : 40
+19 : 65
+this bucket is null
+below is chain:
+10 : 50
+Its size is 7
+*/

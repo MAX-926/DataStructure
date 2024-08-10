@@ -1,8 +1,8 @@
-#include"hashChainsWithTailNode.h"
+#include"37.h"
 
 int main()
 {
-   hashChainsWithTailNode<int, int> z;
+   hashChains<int, int> z;
    pair<int, int> p;
 
    // test insert
@@ -43,14 +43,14 @@ int main()
    z.erase(2);
    z.erase(6);
    z.erase(12);
-   // z.erase(10);
-   // z.erase(8);
-   // z.erase(19);
-   // z.erase(40);
-   // // z.erase(12);
-   // z.erase(24);
-   // z.erase(35);
-   // z.erase(15);
+   z.erase(10);
+   z.erase(8);
+   z.erase(19);
+   z.erase(40);
+   z.erase(12);
+   z.erase(24);
+   z.erase(35);
+   z.erase(15);
 
    cout << "Deleted 1, 2, 6, 12" << endl;
    cout << "The chain is " << z << endl;
