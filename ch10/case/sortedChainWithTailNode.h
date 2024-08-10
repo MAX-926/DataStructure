@@ -5,15 +5,20 @@
 #include"pairNode.h"
 #include<limits.h>
 
+template<class K, class E>
+pairNode<K, E> tail(pair<const K, E>(INT_MAX, INT_MAX), nullptr);
+
 //携帶尾節點的有序鏈表
 template<class K ,class E>
 class sortedChainWithTailNode:public dictionary<K, E>
 {
     public:
     //construcor and destructor
+        // sortedChainWithTailNode(pairNode<K, E>* theTailNode = TNode):dSize(0)
         sortedChainWithTailNode():dSize(0)
         {
-            tailNode = new pairNode<K, E>(pair<const K, E>(INT_MAX, INT_MAX), nullptr);//如果不行就新建一個結構
+            // tailNode = new pairNode<K, E>(pair<const K, E>(INT_MAX, INT_MAX), nullptr);//如果不行就新建一個結構
+            tailNode = &tail<K, E>;
             firstNode = tailNode;
         }
         virtual ~sortedChainWithTailNode();
@@ -32,7 +37,7 @@ class sortedChainWithTailNode:public dictionary<K, E>
 template<class K, class E>
 sortedChainWithTailNode<K, E>::~sortedChainWithTailNode()
 {
-    while(firstNode != nullptr)
+    while(firstNode != &tail<K, E>)
     {
         pairNode<K, E>* nextNode = firstNode->next;
         delete firstNode;

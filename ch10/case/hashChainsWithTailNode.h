@@ -1,12 +1,12 @@
 #ifndef HASHCHAINSWITHTAILNODE_H
 #define HASHCHIANSWITHTAILNODE_H
+
 #include"dictionary.h"
 #include"pairNode.h"
 // #include"sortedChain.h"
 #include"sortedChainWithTailNode.h"
 #include<iostream>
 #include<limits.h>
-
 
 template<class K, class E>
 class hashChainsWithTailNode:public dictionary<K, E>
@@ -17,6 +17,8 @@ class hashChainsWithTailNode:public dictionary<K, E>
         {
             divisor = theDivisor;
             dSize = 0;
+            // tailNode = new pairNode<K, E>(pair<const K, E>(INT_MAX, INT_MAX), nullptr);//如果不行就新建一個結構
+            //调用构造函数构建sortedChainWithTailNode数组
             table = new sortedChainWithTailNode<K ,E>[divisor];
         }
         virtual ~hashChainsWithTailNode() {delete[] table;}
@@ -32,6 +34,7 @@ class hashChainsWithTailNode:public dictionary<K, E>
         hash<K> hash;
         int divisor;
         int dSize;
+        pairNode<K, E>* tailNode;
 };
 
 template<class K, class E>
@@ -40,11 +43,10 @@ pair<const K, E>* hashChainsWithTailNode<K, E>::find(const K& theKey)const
     return table[hash(theKey) % divisor].find(theKey);
 }
 
-
 template<class K, class E>
 void hashChainsWithTailNode<K, E>::insert(const pair<const K, E>& thePair)
 {
-    int homeSize = table[hash(thePair.first) % divisor],size();
+    int homeSize = table[hash(thePair.first) % divisor].size();
     table[hash(thePair.first) % divisor].insert(thePair);
     if(homeSize - table[hash(thePair.first) % divisor].size())
         dSize++;
@@ -53,7 +55,7 @@ void hashChainsWithTailNode<K, E>::insert(const pair<const K, E>& thePair)
 template<class K, class E>
 void hashChainsWithTailNode<K, E>::erase(const K&theKey)
 {
-    int homeSize = table[hash(thePair.first) % divisor],size();
+    int homeSize = table[hash(theKey) % divisor].size();
     table[hash(theKey) % divisor].erase(theKey);
     if(homeSize - table[hash(theKey) % divisor].size())
         dSize--;
@@ -70,7 +72,6 @@ void hashChainsWithTailNode<K, E>::output(ostream& out)const
         else    out << table[i];
     }
 }
-
 
 template<class K, class E>
 ostream& operator<<(ostream& out, const hashChainsWithTailNode<K, E>& hcwtn)

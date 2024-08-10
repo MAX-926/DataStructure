@@ -26,7 +26,7 @@ class arrayQueue:public queue<T>
         
         //5.1）
         // //ii：输出一个队列
-        // void outputQueue()const;
+        void outputQueue(ostream&)const;
         //iii:把一个队列分解成两个新队列，一个队列包含原来的1,3,5...个元素，另一个队列包含其余的元素
         // void split(arrayQueue<T>& A, arrayQueue<T>& b);
         //iv:把两个队列合并成一个新队列。从队列1开始，轮流从两个队列选择元素插入新队列。若某个队列空了，则将另一个队列中的剩余元素插入新队列。合并前后，每一个队列的元素相对顺序不变。
@@ -39,15 +39,22 @@ class arrayQueue:public queue<T>
 };
 
 //test Tools:
-// template<class T>
-// void arrayQueue<T>::outputQueue()const
-// {
-//     if(empty())
-//         throw queueEmpty();
-//     for(int i = 1; i < arrayLength; i++)
-//         cout << queue[i] << " ";
-//     return;
-// }
+template<class T>
+void arrayQueue<T>::outputQueue(ostream& out)const
+{
+    if(empty())
+        throw queueEmpty();
+    for(int i = 1; i < arrayLength; i++)
+        out << queue[i] << " ";
+    return;
+}
+
+template<class T>
+ostream& operator<<(ostream& out, const arrayQueue<T>& aq)
+{
+    aq.outputQueue(out);
+    return out;
+}
 
 template<class T>
 arrayQueue<T>::arrayQueue(int initialCapacity):queue<T>()//O(1) or O(arrayLength)
