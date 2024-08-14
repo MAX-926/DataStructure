@@ -1,0 +1,52 @@
+1) (a+b)/(c-d)+e+g*h/A
+preOrder:
+
++ / + a b - c d + e / * G h a
+
+inOrder:
+
+a + b / c - d + e + g * h / a
+
+postOrder:
+
+a b + c d - / e g h * a / + +
+
+levelOrder:
+
++ / + + - e / a b c d * a g h
+
+2) -x-y*z+(a+b+c/d*e)
+
+preOrder:
+
++ - - x * y z + + a b * / c d e
+
+inOrder:
+
+- x - y * z + a + b + c / d * e
+
+postOrder:
+
+x - y z * - a b + c d / e * + +
+
+levelOrder:
+
++ - + - * + * x y z a b / e c d
+
+3) ((a+b)>(c-e))||a<b&&(x<y||y>z)
+
+preOrder:
+
+|| > + a b - c e && < a b || < x y > y z
+
+inOrder:
+
+a + b > c - e || a < b && x < y || y > z
+
+postOrder:
+
+a b + c e - > a b < x y < y z > || && ||
+
+levelOrder:
+
+|| > && + - < || a b c e a b < > x y y z

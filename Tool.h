@@ -152,6 +152,15 @@ class hashTableFull
         string message;
 };
 
+class treeEmpty
+{
+    public:
+        treeEmpty(string theMsg = "tree is empty\n"):message(theMsg){}
+        void outputMessage()const{cout << message << endl;}
+    private:
+        string message;
+};
+
 template<class T>
 void __HeaderList_fluencyTest(const T& theObj)
 {

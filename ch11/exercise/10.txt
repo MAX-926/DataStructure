@@ -1,0 +1,4 @@
+1) [+ / + + - e / a b c d N N * a N N N N N N N N N N N N g h] //空間利用率：15/29
+2) [+ - + - * + * N x y z a b / e N N N N N N N N N N N N c d] //空間利用率：16/29
+3) [|| > && + - < || a b d e a b < > N N N N N N N N N N N N x y y z] //空間利用率：19/31
+N代表置空

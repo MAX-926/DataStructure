@@ -1,0 +1,19 @@
+preOrder:
+
+a) A B C
+b) A B D C E
+
+inOrder:
+
+a) A B c
+b) B D A C E
+
+postOrder:
+
+a) C B a
+b) D B E C A
+
+levelOrder:
+
+a) A B c
+b) A B C D E

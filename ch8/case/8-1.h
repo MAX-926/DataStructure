@@ -17,4 +17,4 @@ class stack
         virtual void push(const T& theElement) = 0;
         //将元素theElement压入栈顶
 };
-#endif //STACL
+#endif //STACK

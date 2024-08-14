@@ -57,9 +57,9 @@ pair<const K, E>* sortedChainWithTailNode<K, E>::find(const K& theKey)const
     // else
     //     return &(p->element);
     pairNode<K, E>* p = firstNode;
-    while(p->element.first != theKey)
+    while(p->element.first < theKey)
         p = p->next;
-    if(p == nullptr)
+    if(p->element.first > theKey)
         return nullptr;
     else
         return &(p->element);
@@ -93,12 +93,12 @@ void sortedChainWithTailNode<K, E>::erase(const K& theKey)
 {
     pairNode<K, E>* p = firstNode,
                     *tp = nullptr;
-    while(p != nullptr && p->element.first != theKey)
+    while(p->element.first < theKey)
     {
         tp = p;
         p = p->next;
     }
-    if(p == nullptr)
+    if(p == &tail)
         return;
     else
     {
